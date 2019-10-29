@@ -1,0 +1,25 @@
+<UI version="4.0" >
+ <class>BMSClass</class>
+ <widget class="QWidget" name="BMSClass" >
+  <property name="objectName" >
+   <string notr="true">BMSClass</string>
+  </property>
+  <property name="geometry" >
+   <rect>
+	<x>0</x>
+	<y>0</y>
+	<width>600</width>
+	<height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>BMS</string>
+  </property>
+ </widget>
+ <layoutDefault spacing="6" margin="11" />
+ <pixmapfunction></pixmapfunction>
+ <resources>
+   <include location="bms.qrc"/>
+ </resources>
+ <connections/>
+</UI>
