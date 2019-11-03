@@ -1,0 +1,6 @@
+--- 球桌类型表
+字段                   类型       说明
+tabaleType             无         表名
+    |- id              int        球桌类型ID
+	|- typeName        char64     球桌类型名称
+	|- pricePerHour    double     球桌每小时单价

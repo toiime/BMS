@@ -39,6 +39,9 @@
     <Filter Include="Billiards">
       <UniqueIdentifier>{62fc1517-c595-4d95-9d61-7df65106d24d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DbModule">
+      <UniqueIdentifier>{c19aeeb7-dee5-4884-8355-8937a3a4b43e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -64,6 +67,9 @@
     </ClCompile>
     <ClCompile Include="Billiards\BilliardsType.cpp">
       <Filter>Billiards</Filter>
+    </ClCompile>
+    <ClCompile Include="DbModule\DbExecute.cpp">
+      <Filter>DbModule</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="Billiards\BilliardsType.h">
       <Filter>Billiards</Filter>
+    </ClInclude>
+    <ClInclude Include="DbModule\DbExecute.h">
+      <Filter>DbModule</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

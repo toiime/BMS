@@ -13,8 +13,11 @@ public:
 	~BMS();
 
 private:
-	void SlotBtnBusiness();
-	void SlotBtnSettings();
+	void SlotBtnBusiness();       // 营业
+	void SlotBtnSettings();       // 设置
+	void SlotAddBilliardsType();  // 添加球桌类型
+	void SlotAddBilliards();      // 添加球桌
+
 
 private:
 	Ui::BMSClass ui;
