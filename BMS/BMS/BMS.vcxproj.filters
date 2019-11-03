@@ -33,6 +33,12 @@
       <Extensions>cpp;moc</Extensions>
       <SourceControlFiles>False</SourceControlFiles>
     </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{5389f81b-6ec3-4092-8520-da25fe68cb10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Billiards">
+      <UniqueIdentifier>{62fc1517-c595-4d95-9d61-7df65106d24d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -50,6 +56,15 @@
     <ClCompile Include="GeneratedFiles\qrc_bms.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="Billiards\Billiards.cpp">
+      <Filter>Billiards</Filter>
+    </ClCompile>
+    <ClCompile Include="Billiards\BilliardsManager.cpp">
+      <Filter>Billiards</Filter>
+    </ClCompile>
+    <ClCompile Include="Billiards\BilliardsType.cpp">
+      <Filter>Billiards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bms.h">
@@ -65,6 +80,18 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_bms.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Global\GlobalDefine.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Billiards\Billiards.h">
+      <Filter>Billiards</Filter>
+    </ClInclude>
+    <ClInclude Include="Billiards\BilliardsManager.h">
+      <Filter>Billiards</Filter>
+    </ClInclude>
+    <ClInclude Include="Billiards\BilliardsType.h">
+      <Filter>Billiards</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

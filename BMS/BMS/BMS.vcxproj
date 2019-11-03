@@ -76,6 +76,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Billiards\Billiards.cpp" />
+    <ClCompile Include="Billiards\BilliardsManager.cpp" />
+    <ClCompile Include="Billiards\BilliardsType.cpp" />
     <ClCompile Include="bms.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_bms.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -116,7 +119,11 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Billiards\Billiards.h" />
+    <ClInclude Include="Billiards\BilliardsManager.h" />
+    <ClInclude Include="Billiards\BilliardsType.h" />
     <ClInclude Include="GeneratedFiles\ui_bms.h" />
+    <ClInclude Include="Global\GlobalDefine.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bms.qrc">
