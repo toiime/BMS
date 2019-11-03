@@ -1,5 +1,5 @@
-﻿#ifndef BMS_H
-#define BMS_H
+﻿#ifndef BMS_H_
+#define BMS_H_
 
 #include <QtWidgets/QWidget>
 #include "ui_bms.h"
@@ -13,6 +13,10 @@ public:
 	~BMS();
 
 private:
+	void InitTabWidgetTableType();
+	void UpdateTableType();
+
+private:
 	void SlotBtnBusiness();       // 营业
 	void SlotBtnSettings();       // 设置
 	void SlotAddBilliardsType();  // 添加球桌类型
@@ -23,4 +27,4 @@ private:
 	Ui::BMSClass ui;
 };
 
-#endif // BMS_H
+#endif // BMS_H_

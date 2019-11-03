@@ -10,7 +10,8 @@ public:
 	~Billiards();
 
 private:
-	int _id;                          // 球桌ID
+	QString _uuid;                    // 球桌ID
+	int _tableNum;                    // 桌号
 	BilliardsType _billiardsType;     // 球桌类型
 	int _beginTime;                   // 开始时间
 	int _endTime;                     // 结束时间
