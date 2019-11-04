@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>723</width>
+    <height>489</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -114,7 +114,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton">
+                 <widget class="QPushButton" name="pushButtonDeleteTableType">
                   <property name="text">
                    <string>删除球桌类型</string>
                   </property>

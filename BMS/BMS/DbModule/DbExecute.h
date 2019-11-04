@@ -14,6 +14,7 @@ public:
 
 	// 表 tableType
 	static int InsertToTableType(BilliardsType& billiardsType);
+	static int QueryFromTableType(QVector<BilliardsType>& vecBilliardsType);
 
 private:
 	// 创建表 tableType

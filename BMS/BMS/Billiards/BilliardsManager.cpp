@@ -9,6 +9,10 @@ BilliardsManager* BilliardsManager::GetInstance() {
 	return _instance;
 }
 
+void BilliardsManager::LoadTableTypeFromDb() {
+	DbExecute::QueryFromTableType(_vecBilliardsType);
+}
+
 void BilliardsManager::AddTableType(QString typeName, double pricePerHour) {
 	BilliardsType billiardsType;
 

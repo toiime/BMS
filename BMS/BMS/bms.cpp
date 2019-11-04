@@ -16,6 +16,7 @@ BMS::BMS(QWidget *parent)
 	connect(ui.pushButtonBusiness, &QPushButton::clicked, this, &BMS::SlotBtnBusiness);
 	connect(ui.pushButtonSettings, &QPushButton::clicked, this, &BMS::SlotBtnSettings);
 	connect(ui.pushButtonAddBilliardsType, &QPushButton::clicked, this, &BMS::SlotAddBilliardsType);
+	connect(ui.pushButtonDeleteTableType, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsType);
 	connect(ui.pushButtonAddBilliards, &QPushButton::clicked, this, &BMS::SlotAddBilliards);
 }
 
@@ -38,6 +39,9 @@ void BMS::InitTabWidgetTableType() {
 	ui.tableWidgetTableType->setSelectionBehavior(QAbstractItemView::SelectRows);
 	// 失去焦点 选中没有蓝色的 还挺好看...
 	ui.tableWidgetTableType->setFocusPolicy(Qt::NoFocus);
+
+	BilliardsManager::GetInstance()->LoadTableTypeFromDb();
+	UpdateTableType();
 }
 
 void BMS::UpdateTableType() {
@@ -67,6 +71,10 @@ void BMS::SlotAddBilliardsType() {
 	if (addTypeDlg.exec() == QDialog::Accepted) {
 		UpdateTableType();
 	}
+}
+
+void BMS::SlotDeleteBilliardsType() {
+	// todo ...
 }
 
 void BMS::SlotAddBilliards() {

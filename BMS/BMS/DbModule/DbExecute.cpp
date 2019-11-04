@@ -43,6 +43,28 @@ int DbExecute::InsertToTableType(BilliardsType& billiardsType) {
 	return 0;
 }
 
+int DbExecute::QueryFromTableType(QVector<BilliardsType>& vecBilliardsType) {
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("select * from tableType");
+	query.prepare(sql);
+	bool isOk = query.exec();
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::QueryFromTableType sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+
+	while (query.next()) {
+		BilliardsType billiardsType;
+		billiardsType.SetUuid(query.value(0).toString());
+		billiardsType.SetTypeName(query.value(1).toString());
+		billiardsType.SetPricePerHour(query.value(2).toDouble());
+		vecBilliardsType.push_back(billiardsType);
+	}
+	return 0;
+}
+
 int DbExecute::CreateTableTableType() {
 	if (IsExistTable("tableType")) {
 		return 0;
