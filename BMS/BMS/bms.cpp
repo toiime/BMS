@@ -59,8 +59,6 @@ void BMS::SlotBtnBusiness() {
 
 void BMS::SlotBtnSettings() {
 	ui.stackedWidgetMainWindow->setCurrentIndex(1);
-
-	// DbExecute::InitDb();
 }
 
 void BMS::SlotAddBilliardsType() {

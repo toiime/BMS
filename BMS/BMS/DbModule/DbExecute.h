@@ -1,6 +1,8 @@
 ﻿#ifndef DB_EXECUTE_H_
 #define DB_EXECUTE_H_
 
+#include "./Billiards/BilliardsType.h"
+
 // 数据库操作类...
 class DbExecute {
 public:
@@ -9,6 +11,16 @@ public:
 
 public:
 	static int InitDb();
+
+	// 表 tableType
+	static int InsertToTableType(BilliardsType& billiardsType);
+
+private:
+	// 创建表 tableType
+	static int CreateTableTableType();
+
+	// 判断表是否存在
+	static bool IsExistTable(QString tableName);
 };
 
 #endif // !DB_EXECUTE_H_

@@ -3,6 +3,7 @@
 #include <QSqlDatabase>
 #include <QSqlQuery>
 #include <QDebug>
+#include <QSqlError>
 
 #include "./Global/GlobalDefine.h"
 
@@ -21,5 +22,59 @@ int DbExecute::InitDb() {
 	bool ok = db.open();
 	if (!ok) return -1;
 
+	CreateTableTableType();
+
 	return 0;
+}
+
+int DbExecute::InsertToTableType(BilliardsType& billiardsType) {
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("insert into tableType(uuid, typeName, pricePerHour) values('%1', '%2', %3)")
+		.arg(billiardsType.GetUuid()).arg(billiardsType.GetTypeName()).arg(billiardsType.GetPricePerHour());
+	query.prepare(sql);
+	bool isOk = query.exec();
+
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::InsertToTableType sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+	return 0;
+}
+
+int DbExecute::CreateTableTableType() {
+	if (IsExistTable("tableType")) {
+		return 0;
+	}
+
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("create table tableType(uuid TEXT, typeName TEXT, pricePerHour REAL)");
+	query.prepare(sql);
+	bool isOk = query.exec();
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::CreateTableTableType sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+
+	return 0;
+}
+
+bool DbExecute::IsExistTable(QString tableName) {
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("select count(*) from sqlite_master where type = 'table' and name = '%1'").arg(tableName);
+	query.prepare(sql);
+	bool isOk = query.exec();
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::InsertToTableType sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return false;
+	}
+	if (query.next()) {
+		return query.value(0).toInt() != 0;
+	}
+	return true;
 }
