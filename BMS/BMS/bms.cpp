@@ -1,4 +1,5 @@
 ﻿#include <QDebug>
+#include <QMessageBox>
 
 #include "bms.h"
 
@@ -50,10 +51,11 @@ void BMS::UpdateTableType() {
 	QVector<BilliardsType> tableTypes = BilliardsManager::GetInstance()->GetTableTypes();
 
 	for (auto& v : tableTypes) {
-		int row_count = ui.tableWidgetTableType->rowCount();
-		ui.tableWidgetTableType->insertRow(row_count);
-		ui.tableWidgetTableType->setItem(row_count, 0, new QTableWidgetItem(v.GetTypeName()));
-		ui.tableWidgetTableType->setItem(row_count, 1, new QTableWidgetItem(QString::number(v.GetPricePerHour())));
+		int rowCount = ui.tableWidgetTableType->rowCount();
+		ui.tableWidgetTableType->insertRow(rowCount);
+		ui.tableWidgetTableType->setItem(rowCount, 0, new QTableWidgetItem(v.GetTypeName()));
+		ui.tableWidgetTableType->setItem(rowCount, 1, new QTableWidgetItem(QString::number(v.GetPricePerHour())));
+		ui.tableWidgetTableType->item(rowCount, 0)->setData(Qt::UserRole, v.GetUuid());
 	}
 }
 
@@ -74,7 +76,23 @@ void BMS::SlotAddBilliardsType() {
 }
 
 void BMS::SlotDeleteBilliardsType() {
-	// todo ...
+	int rowIndex = ui.tableWidgetTableType->currentRow();
+	if (rowIndex < 0) {
+		QMessageBox::information(this, "Note", "No Data Selected");
+		return;
+	}
+
+	int rv = QMessageBox::question(this, QString("Note"), QStringLiteral("确定要删除吗?")
+		, QStringLiteral("确定"), QStringLiteral("取消"));
+	if (rv != 0) {
+		return;
+	}
+
+	QString uuid = ui.tableWidgetTableType->item(rowIndex, 0)->data(Qt::UserRole).toString();
+	ui.tableWidgetTableType->removeRow(rowIndex);
+	ui.tableWidgetTableType->setCurrentItem(nullptr);
+
+	BilliardsManager::GetInstance()->DeleteTableType(uuid);
 }
 
 void BMS::SlotAddBilliards() {

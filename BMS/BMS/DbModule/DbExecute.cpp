@@ -43,6 +43,21 @@ int DbExecute::InsertToTableType(BilliardsType& billiardsType) {
 	return 0;
 }
 
+int DbExecute::DeleteFromTableType(QString sqlWhere) {
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("delete from tableType %1").arg(sqlWhere);
+	query.prepare(sql);
+	bool isOk = query.exec();
+
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::DeleteFromTableType sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+	return 0;
+}
+
 int DbExecute::QueryFromTableType(QVector<BilliardsType>& vecBilliardsType) {
 	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
 	QSqlQuery query(db);

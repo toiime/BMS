@@ -14,6 +14,7 @@ public:
 
 	// 表 tableType
 	static int InsertToTableType(BilliardsType& billiardsType);
+	static int DeleteFromTableType(QString sqlWhere);
 	static int QueryFromTableType(QVector<BilliardsType>& vecBilliardsType);
 
 private:

@@ -20,6 +20,7 @@ public:
 public:
 	void LoadTableTypeFromDb();                               // 数据库加载球桌类型
 	void AddTableType(QString typeName, double pricePerHour); // 添加球桌类型
+	void DeleteTableType(QString uuid);                       // 删除球桌类型
 	QVector<BilliardsType> GetTableTypes();                   // 返回球桌类型数组拷贝
 
 

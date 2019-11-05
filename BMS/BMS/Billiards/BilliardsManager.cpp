@@ -28,6 +28,20 @@ void BilliardsManager::AddTableType(QString typeName, double pricePerHour) {
 	DbExecute::InsertToTableType(billiardsType);  // 数据库
 }
 
+void BilliardsManager::DeleteTableType(QString uuid) {
+	for (auto iter = _vecBilliardsType.begin(); iter != _vecBilliardsType.end();) {
+		if (iter->GetUuid() == uuid) {
+			iter = _vecBilliardsType.erase(iter);
+		}
+		else {
+			++iter;
+		}
+	}
+
+	QString sqlWhere(QString("where uuid = '%1'").arg(uuid));
+	DbExecute::DeleteFromTableType(sqlWhere);
+}
+
 QVector<BilliardsType> BilliardsManager::GetTableTypes() {
 	return _vecBilliardsType;
 }
