@@ -46,6 +46,49 @@ QVector<BilliardsType> BilliardsManager::GetTableTypes() {
 	return _vecBilliardsType;
 }
 
+void BilliardsManager::LoadTableFromDb() {
+	DbExecute::QueryFromBilliardsTable(_vecBilliards);
+}
+
+void BilliardsManager::AddBilliardsTable(int tableNum, QString tableTypeid) {
+	Billiards billiards;
+
+	QUuid id = QUuid::createUuid();
+	QString strId = id.toString();
+
+	billiards.SetUuid(strId);
+	billiards.SetTableNum(tableNum);
+
+	for (auto& v : _vecBilliardsType) {
+		if (tableTypeid == v.GetUuid()) {
+			billiards.SetBilliardsType(v);
+			break;
+		}
+	}
+
+	_vecBilliards.push_back(billiards);   // 内存
+
+	DbExecute::InsertToBilliardsTable(billiards);  // 数据库
+}
+
+void BilliardsManager::DeleteBilliardsTable(QString uuid) {
+	for (auto iter = _vecBilliards.begin(); iter != _vecBilliards.end();) {
+		if (iter->GetUuid() == uuid) {
+			iter = _vecBilliards.erase(iter);
+		}
+		else {
+			++iter;
+		}
+	}
+
+	QString sqlWhere(QString("where uuid = '%1'").arg(uuid));
+	DbExecute::DeleteFromBilliardsTable(sqlWhere);
+}
+
+QVector<Billiards> BilliardsManager::GetBilliardsTables() {
+	return _vecBilliards;
+}
+
 BilliardsManager::BilliardsManager() {
 
 }

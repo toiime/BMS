@@ -13,6 +13,9 @@ public:
 	~GuiAddBilliardsTable();
 
 private:
+	void InitUi();
+
+private:
 	void SlotBtnOk();
 	void SlotBtnCancel();
 

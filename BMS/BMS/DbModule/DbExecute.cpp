@@ -1,4 +1,4 @@
-#include "DbExecute.h"
+﻿#include "DbExecute.h"
 
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -23,6 +23,7 @@ int DbExecute::InitDb() {
 	if (!ok) return -1;
 
 	CreateTableTableType();
+	CreateTableBilliardsTable();
 
 	return 0;
 }
@@ -80,6 +81,79 @@ int DbExecute::QueryFromTableType(QVector<BilliardsType>& vecBilliardsType) {
 	return 0;
 }
 
+int DbExecute::InsertToBilliardsTable(Billiards& billiards) {
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("insert into billiardsTable(uuid, tableNum, billiardsTypeId"
+		", beginTime, endTime)"
+		" values('%1', %2, '%3', %4, %5)")
+		.arg(billiards.GetUuid())
+		.arg(billiards.GetTableNum())
+		.arg(billiards.GetBilliardsType().GetUuid())
+		.arg(billiards.GetBeginTime())
+		.arg(billiards.GetEndTime());
+	query.prepare(sql);
+	bool isOk = query.exec();
+
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::InsertToBilliardsTable sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+	return 0;
+}
+
+int DbExecute::DeleteFromBilliardsTable(QString sqlWhere) {
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("delete from billiardsTable %1").arg(sqlWhere);
+	query.prepare(sql);
+	bool isOk = query.exec();
+
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::DeleteFromBilliardsTable sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+	return 0;
+}
+
+int DbExecute::QueryFromBilliardsTable(QVector<Billiards>& vecBilliards) {
+	// 先查询球桌类型
+	QVector<BilliardsType> vecBilliardsType;
+	DbExecute::QueryFromTableType(vecBilliardsType);
+
+	// 再查询球桌
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("select * from billiardsTable");
+	query.prepare(sql);
+	bool isOk = query.exec();
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::QueryFromBilliardsTable sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+
+	QString tableTypeUuid;
+	while (query.next()) {
+		Billiards billiards;
+		billiards.SetUuid(query.value(0).toString());
+		billiards.SetTableNum(query.value(1).toInt());
+		tableTypeUuid = query.value(2).toString();
+		for (auto& v : vecBilliardsType) {
+			if (tableTypeUuid == v.GetUuid()) {
+				billiards.SetBilliardsType(v);
+				break;
+			}
+		}
+		billiards.SetBeginTime(query.value(3).toInt());
+		billiards.SetEndTime(query.value(4).toInt());
+		vecBilliards.push_back(billiards);
+	}
+	return 0;
+}
+
 int DbExecute::CreateTableTableType() {
 	if (IsExistTable("tableType")) {
 		return 0;
@@ -92,6 +166,26 @@ int DbExecute::CreateTableTableType() {
 	bool isOk = query.exec();
 	if (!isOk) {
 		qDebug() << "\n Sql Error in DbExecute::CreateTableTableType sql is " << sql;
+		qDebug() << "\n Sql Error " << query.lastError();
+		return -1;
+	}
+
+	return 0;
+}
+
+int DbExecute::CreateTableBilliardsTable() {
+	if (IsExistTable("billiardsTable")) {
+		return 0;
+	}
+
+	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
+	QSqlQuery query(db);
+	QString sql = QString("create table billiardsTable(uuid TEXT, tableNum INTEGER"
+		", billiardsTypeId TEXT, beginTime timestamp, endTime endTime)");
+	query.prepare(sql);
+	bool isOk = query.exec();
+	if (!isOk) {
+		qDebug() << "\n Sql Error in DbExecute::CreateTableBilliardsTable sql is " << sql;
 		qDebug() << "\n Sql Error " << query.lastError();
 		return -1;
 	}

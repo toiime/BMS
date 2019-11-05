@@ -16,12 +16,16 @@ private:
 	void InitTabWidgetTableType();
 	void UpdateTableType();
 
+	void InitTabWidgetTable();
+	void UpdateBilliardsTable();
+
 private:
 	void SlotBtnBusiness();         // 营业
 	void SlotBtnSettings();         // 设置
 	void SlotAddBilliardsType();    // 添加球桌类型
 	void SlotDeleteBilliardsType(); // 删除球桌类型
 	void SlotAddBilliards();        // 添加球桌
+	void SlotDeleteBilliardsTable();// 删除球桌
 
 
 private:

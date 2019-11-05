@@ -23,6 +23,11 @@ public:
 	void DeleteTableType(QString uuid);                       // 删除球桌类型
 	QVector<BilliardsType> GetTableTypes();                   // 返回球桌类型数组拷贝
 
+	void LoadTableFromDb();                                   // 数据库中加载球桌
+	void AddBilliardsTable(int tableNum, QString tableTypeid);// 添加球桌
+	void DeleteBilliardsTable(QString uuid);                  // 删除球桌
+	QVector<Billiards> GetBilliardsTables();                  // 返回球桌数组拷贝
+
 
 private:
 	QVector<Billiards> _vecBilliards;     // 球桌数组

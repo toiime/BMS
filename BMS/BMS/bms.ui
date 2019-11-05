@@ -81,7 +81,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab">
              <attribute name="title">
@@ -137,7 +137,7 @@
              </attribute>
              <layout class="QVBoxLayout" name="verticalLayout_3">
               <item>
-               <widget class="QTableWidget" name="tableWidgetTables_2"/>
+               <widget class="QTableWidget" name="tableWidgetTables"/>
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -162,7 +162,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_3">
+                 <widget class="QPushButton" name="pushButtonDeleteTable">
                   <property name="text">
                    <string>删除球桌</string>
                   </property>

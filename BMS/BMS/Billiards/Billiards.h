@@ -9,6 +9,21 @@ public:
 	Billiards();
 	~Billiards();
 
+	void SetUuid(QString uuid);
+	QString GetUuid();
+
+	void SetTableNum(int tableNum);
+	int GetTableNum();
+
+	void SetBilliardsType(BilliardsType billiardsType);
+	BilliardsType GetBilliardsType();
+
+	void SetBeginTime(int beginTime);
+	int GetBeginTime();
+
+	void SetEndTime(int endTime);
+	int GetEndTime();
+
 private:
 	QString _uuid;                    // 球桌ID
 	int _tableNum;                    // 桌号
