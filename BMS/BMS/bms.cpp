@@ -13,6 +13,8 @@ BMS::BMS(QWidget *parent)
 	: QWidget(parent) {
 	ui.setupUi(this);
 
+	showMaximized();
+
 	InitTabWidgetTableType();
 	InitTabWidgetTable();
 	InitBusinessPage();
@@ -102,10 +104,12 @@ void BMS::InitBusinessPage() {
 
 	QGridLayout *qGridLayout = new QGridLayout;
 	QVector<Billiards> vecBilliards = BilliardsManager::GetInstance()->GetBilliardsTables();
-	int colCount = 2;
+	int colCount = 6;
 	int index = 0;
 	for (auto& v : vecBilliards) {
 		GuiBilliardsTable* guiBilliardsTable = new GuiBilliardsTable(this);
+		guiBilliardsTable->SetBilliards(v);
+		guiBilliardsTable->UpdateUi();
 		qGridLayout->addWidget(guiBilliardsTable, index / colCount, index % colCount);
 		++index;
 	}
