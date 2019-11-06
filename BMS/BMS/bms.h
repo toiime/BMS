@@ -19,6 +19,8 @@ private:
 	void InitTabWidgetTable();
 	void UpdateBilliardsTable();
 
+	void InitBusinessPage();
+
 private:
 	void SlotBtnBusiness();         // 营业
 	void SlotBtnSettings();         // 设置

@@ -89,6 +89,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_GuiAddBilliardsType.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiBilliardsTable.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiBilliardsTable.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Billiards\GuiBilliardsTable.cpp">
+      <Filter>Billiards</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bms.h">
@@ -110,6 +119,12 @@
       <Filter>Billiards</Filter>
     </CustomBuild>
     <CustomBuild Include="Billiards\GuiAddBilliardsType.ui">
+      <Filter>Billiards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Billiards\GuiBilliardsTable.ui">
+      <Filter>Billiards</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Billiards\GuiBilliardsTable.h">
       <Filter>Billiards</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -136,6 +151,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GuiAddBilliardsType.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiBilliardsTable.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

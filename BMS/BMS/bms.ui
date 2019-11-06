@@ -48,7 +48,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidgetMainWindow">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageBusiness">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -59,10 +59,8 @@
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_5">
           <item>
-           <widget class="QLabel" name="label">
-            <property name="text">
-             <string>营业</string>
-            </property>
+           <widget class="QWidget" name="widgetBusiness" native="true">
+            <layout class="QGridLayout" name="gridLayout"/>
            </widget>
           </item>
          </layout>

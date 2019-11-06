@@ -7,6 +7,7 @@
 #include "./Billiards/GuiAddBilliardsType.h"
 #include "./Billiards/GuiAddBilliardsTable.h"
 #include "./Billiards/BilliardsManager.h"
+#include "./Billiards/GuiBilliardsTable.h"
 
 BMS::BMS(QWidget *parent)
 	: QWidget(parent) {
@@ -14,6 +15,8 @@ BMS::BMS(QWidget *parent)
 
 	InitTabWidgetTableType();
 	InitTabWidgetTable();
+	InitBusinessPage();
+
 
 	connect(ui.pushButtonBusiness, &QPushButton::clicked, this, &BMS::SlotBtnBusiness);
 	connect(ui.pushButtonSettings, &QPushButton::clicked, this, &BMS::SlotBtnSettings);
@@ -92,6 +95,17 @@ void BMS::UpdateBilliardsTable() {
 		ui.tableWidgetTables->setItem(rowCount, 0, new QTableWidgetItem(QString::number(v.GetTableNum())));
 		ui.tableWidgetTables->setItem(rowCount, 1, new QTableWidgetItem(v.GetBilliardsType().GetTypeName()));
 		ui.tableWidgetTables->item(rowCount, 0)->setData(Qt::UserRole, v.GetUuid());
+	}
+}
+
+void BMS::InitBusinessPage() {
+	QGridLayout* qGridLayout = dynamic_cast<QGridLayout*>(ui.widgetBusiness->layout());
+	if (!qGridLayout) return;
+
+	QVector<Billiards> vecBilliards = BilliardsManager::GetInstance()->GetBilliardsTables();
+	for (auto& v : vecBilliards) {
+		GuiBilliardsTable* guiBilliardsTable = new GuiBilliardsTable(this);
+		qGridLayout->addWidget(guiBilliardsTable);
 	}
 }
 
