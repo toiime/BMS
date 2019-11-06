@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="BMS">
+    <qresource prefix="/Pic">
+        <file>Res/billiardsTable.png</file>
     </qresource>
 </RCC>

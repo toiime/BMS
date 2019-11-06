@@ -103,9 +103,12 @@ void BMS::InitBusinessPage() {
 	if (!qGridLayout) return;
 
 	QVector<Billiards> vecBilliards = BilliardsManager::GetInstance()->GetBilliardsTables();
+	int mediaColCount = 3;
+	int index = 0;
 	for (auto& v : vecBilliards) {
 		GuiBilliardsTable* guiBilliardsTable = new GuiBilliardsTable(this);
-		qGridLayout->addWidget(guiBilliardsTable);
+		qGridLayout->addWidget(guiBilliardsTable, index / mediaColCount, index % mediaColCount);
+		++index;
 	}
 }
 
