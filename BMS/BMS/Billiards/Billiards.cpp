@@ -1,7 +1,8 @@
 #include "Billiards.h"
 
 Billiards::Billiards() {
-
+	_tableNum = -1;
+	_isBegin = false;
 }
 
 Billiards::~Billiards() {
@@ -32,18 +33,26 @@ BilliardsType Billiards::GetBilliardsType() {
 	return _billiardsType;
 }
 
-void Billiards::SetBeginTime(int beginTime) {
+void Billiards::SetBeginTime(QDateTime beginTime) {
 	_beginTime = beginTime;
 }
 
-int Billiards::GetBeginTime() {
+QDateTime Billiards::GetBeginTime() {
 	return _beginTime;
 }
 
-void Billiards::SetEndTime(int endTime) {
+void Billiards::SetEndTime(QDateTime endTime) {
 	_endTime = endTime;
 }
 
-int Billiards::GetEndTime() {
+QDateTime Billiards::GetEndTime() {
 	return _endTime;
+}
+
+void Billiards::SetIsBegin(bool isBegin) {
+	_isBegin = isBegin;
+}
+
+bool Billiards::GetIsBegin() {
+	return _isBegin;
 }

@@ -86,12 +86,12 @@ int DbExecute::InsertToBilliardsTable(Billiards& billiards) {
 	QSqlQuery query(db);
 	QString sql = QString("insert into billiardsTable(uuid, tableNum, billiardsTypeId"
 		", beginTime, endTime)"
-		" values('%1', %2, '%3', %4, %5)")
+		" values('%1', %2, '%3', '%4', '%5')")
 		.arg(billiards.GetUuid())
 		.arg(billiards.GetTableNum())
 		.arg(billiards.GetBilliardsType().GetUuid())
-		.arg(billiards.GetBeginTime())
-		.arg(billiards.GetEndTime());
+		.arg(billiards.GetBeginTime().toString("yyyy-MM-dd hh:mm:ss"))
+		.arg(billiards.GetEndTime().toString("yyyy-MM-dd hh:mm:ss"));
 	query.prepare(sql);
 	bool isOk = query.exec();
 
@@ -147,8 +147,8 @@ int DbExecute::QueryFromBilliardsTable(QVector<Billiards>& vecBilliards) {
 				break;
 			}
 		}
-		billiards.SetBeginTime(query.value(3).toInt());
-		billiards.SetEndTime(query.value(4).toInt());
+		billiards.SetBeginTime(QDateTime::fromString(query.value(3).toString()));
+		billiards.SetEndTime(QDateTime::fromString(query.value(4).toString()));
 		vecBilliards.push_back(billiards);
 	}
 	return 0;
@@ -181,7 +181,7 @@ int DbExecute::CreateTableBilliardsTable() {
 	QSqlDatabase db = QSqlDatabase::database(gConnectionName);
 	QSqlQuery query(db);
 	QString sql = QString("create table billiardsTable(uuid TEXT, tableNum INTEGER"
-		", billiardsTypeId TEXT, beginTime timestamp, endTime endTime)");
+		", billiardsTypeId TEXT, beginTime TEXT, endTime TEXT)");
 	query.prepare(sql);
 	bool isOk = query.exec();
 	if (!isOk) {
