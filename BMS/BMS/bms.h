@@ -4,7 +4,9 @@
 #include <QtWidgets/QWidget>
 #include "ui_bms.h"
 
-// 台球计费系统高窗口...
+class GuiBilliardsTable;
+
+// 台球计费系统主窗口...
 class BMS : public QWidget {
 	Q_OBJECT
 
@@ -29,9 +31,13 @@ private:
 	void SlotAddBilliards();        // 添加球桌
 	void SlotDeleteBilliardsTable();// 删除球桌
 
+	void SlotTimeOut();             // 定时器
 
 private:
 	Ui::BMSClass ui;
+
+	QTimer* qTimer;
+	QVector<GuiBilliardsTable*> _vecGuiBilliardsTable;
 };
 
 #endif // BMS_H_

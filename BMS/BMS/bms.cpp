@@ -1,5 +1,6 @@
 ﻿#include <QDebug>
 #include <QMessageBox>
+#include <QTimer>
 
 #include "bms.h"
 
@@ -15,6 +16,10 @@ BMS::BMS(QWidget *parent)
 
 	showMaximized();
 
+	qTimer = new QTimer;
+	connect(qTimer, &QTimer::timeout, this, &BMS::SlotTimeOut);
+	qTimer->start(1000);
+
 	InitTabWidgetTableType();
 	InitTabWidgetTable();
 	InitBusinessPage();
@@ -29,7 +34,11 @@ BMS::BMS(QWidget *parent)
 }
 
 BMS::~BMS() {
-
+	qTimer->stop();
+	if (qTimer) {
+		delete qTimer;
+		qTimer = nullptr;
+	}
 }
 
 void BMS::InitTabWidgetTableType() {
@@ -108,6 +117,7 @@ void BMS::InitBusinessPage() {
 	int index = 0;
 	for (auto& v : vecBilliards) {
 		GuiBilliardsTable* guiBilliardsTable = new GuiBilliardsTable(this);
+		_vecGuiBilliardsTable.push_back(guiBilliardsTable);
 		guiBilliardsTable->SetBilliards(v);
 		guiBilliardsTable->UpdateUi();
 		qGridLayout->addWidget(guiBilliardsTable, index / colCount, index % colCount);
@@ -178,4 +188,12 @@ void BMS::SlotDeleteBilliardsTable() {
 	ui.tableWidgetTables->setCurrentItem(nullptr);
 
 	BilliardsManager::GetInstance()->DeleteBilliardsTable(uuid);
+}
+
+void BMS::SlotTimeOut() {
+	QDateTime qDateTime = QDateTime::currentDateTime();
+	for (auto& v : _vecGuiBilliardsTable) {
+		v->UpdateData(qDateTime);
+		v->UpdateUi();
+	}
 }
