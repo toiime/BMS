@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1025</width>
-    <height>654</height>
+    <width>1069</width>
+    <height>676</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -68,8 +68,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>967</width>
-               <height>550</height>
+               <width>1011</width>
+               <height>551</height>
               </rect>
              </property>
             </widget>
@@ -196,6 +196,13 @@
        </item>
       </layout>
      </widget>
+    </widget>
+   </item>
+   <item alignment="Qt::AlignRight">
+    <widget class="QLabel" name="labelCurrentTime">
+     <property name="text">
+      <string/>
+     </property>
     </widget>
    </item>
   </layout>

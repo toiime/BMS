@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/Pic">
         <file>Res/billiardsTable.png</file>
+        <file>Res/billiardsTablePlaying.png</file>
     </qresource>
 </RCC>

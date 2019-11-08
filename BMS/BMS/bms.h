@@ -36,7 +36,7 @@ private:
 private:
 	Ui::BMSClass ui;
 
-	QTimer* qTimer;
+	QTimer* _qTimer;
 	QVector<GuiBilliardsTable*> _vecGuiBilliardsTable;
 };
 

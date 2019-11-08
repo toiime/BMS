@@ -16,9 +16,9 @@ BMS::BMS(QWidget *parent)
 
 	showMaximized();
 
-	qTimer = new QTimer;
-	connect(qTimer, &QTimer::timeout, this, &BMS::SlotTimeOut);
-	qTimer->start(1000);
+	_qTimer = new QTimer;
+	connect(_qTimer, &QTimer::timeout, this, &BMS::SlotTimeOut);
+	_qTimer->start(1000);
 
 	InitTabWidgetTableType();
 	InitTabWidgetTable();
@@ -34,10 +34,10 @@ BMS::BMS(QWidget *parent)
 }
 
 BMS::~BMS() {
-	qTimer->stop();
-	if (qTimer) {
-		delete qTimer;
-		qTimer = nullptr;
+	_qTimer->stop();
+	if (_qTimer) {
+		delete _qTimer;
+		_qTimer = nullptr;
 	}
 }
 
@@ -191,9 +191,13 @@ void BMS::SlotDeleteBilliardsTable() {
 }
 
 void BMS::SlotTimeOut() {
+	// 更新球桌信息...
 	QDateTime qDateTime = QDateTime::currentDateTime();
 	for (auto& v : _vecGuiBilliardsTable) {
 		v->UpdateData(qDateTime);
 		v->UpdateUi();
 	}
+
+	// 更新时间...
+	ui.labelCurrentTime->setText(QDateTime::currentDateTime().toString("ddd yyyy-MM-dd hh:mm:ss"));
 }

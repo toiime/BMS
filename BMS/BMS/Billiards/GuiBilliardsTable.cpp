@@ -1,14 +1,25 @@
 ﻿#include <QMenu>
 #include <QDebug>
+#include <QMessageBox>
 #include "GuiBilliardsTable.h"
 
 GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
 	: QWidget(parent) {
 	ui.setupUi(this);
 
-	QPixmap pixmap = QPixmap(":/Pic/Res/billiardsTable.png");
-	pixmap = pixmap.scaled(QSize(250, 130));
-	ui.labelPic->setPixmap(pixmap);
+	ui.lineEditTableNum->setEnabled(false);
+	ui.lineEditTableType->setEnabled(false);
+	ui.lineEditBeginTime->setEnabled(false);
+	ui.lineEditPerHour->setEnabled(false);
+	ui.lineEditDurationTime->setEnabled(false);
+	ui.lineEditMoney->setEnabled(false);
+
+	_qPixmap = QPixmap(":/Pic/Res/billiardsTable.png");
+	_qPixmap = _qPixmap.scaled(QSize(250, 130));
+	ui.labelPic->setPixmap(_qPixmap);
+
+	_qPixmapPlaying = QPixmap(":/Pic/Res/billiardsTablePlaying.png");
+	_qPixmapPlaying = _qPixmapPlaying.scaled(QSize(250, 130));
 
 	_money = 0.0;                    // 消费金额
 }
@@ -24,10 +35,18 @@ void GuiBilliardsTable::SetBilliards(Billiards& billiards) {
 void GuiBilliardsTable::UpdateUi() {
 	ui.lineEditTableNum->setText(QString::number(_billiards.GetTableNum()));
 	ui.lineEditTableType->setText(_billiards.GetBilliardsType().GetTypeName());
-	ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString("yyyy-MM-dd hh:mm:ss"));
 	ui.lineEditPerHour->setText(QString::number(_billiards.GetBilliardsType().GetPricePerHour()));
-	ui.lineEditDurationTime->setText(_durationTime);
-	ui.lineEditMoney->setText(QString::number(_money));
+
+	if (_billiards.GetIsBegin()) {
+		ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString("yyyy-MM-dd hh:mm:ss"));
+		ui.lineEditDurationTime->setText(_durationTime);
+		ui.lineEditMoney->setText(QString::number(_money));
+	}
+	else {
+		ui.lineEditBeginTime->setText(QStringLiteral("未开局"));
+		ui.lineEditDurationTime->setText(QStringLiteral("未开局"));
+		ui.lineEditMoney->setText(QStringLiteral("未开局"));
+	}
 }
 
 void GuiBilliardsTable::UpdateData(QDateTime currentDateTime) {
@@ -45,12 +64,18 @@ void GuiBilliardsTable::contextMenuEvent(QContextMenuEvent *event) {
 }
 
 void GuiBilliardsTable::SlotBegin() {
-	qDebug() << "GuiBilliardsTable::SlotBegin";
+	if (_billiards.GetIsBegin()) {
+		QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("本桌已经开局!"));
+		return;
+	}
+
+	ui.labelPic->setPixmap(_qPixmapPlaying);
 	_billiards.SetBeginTime(QDateTime::currentDateTime());
 	_billiards.SetIsBegin(true);
 	UpdateUi();
 }
 
 void GuiBilliardsTable::SlotEnd() {
-	qDebug() << "GuiBilliardsTable::SlotEnd";
+	ui.labelPic->setPixmap(_qPixmap);
+	_billiards.SetIsBegin(false);
 }

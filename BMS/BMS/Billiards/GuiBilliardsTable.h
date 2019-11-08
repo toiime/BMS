@@ -21,8 +21,8 @@ protected:
 	void contextMenuEvent(QContextMenuEvent *event);
 
 private:
-	void SlotBegin();
-	void SlotEnd();
+	void SlotBegin();       // 开局...
+	void SlotEnd();         // 结账...
 
 private:
 	Ui::GuiBilliardsTable ui;
@@ -30,6 +30,9 @@ private:
 	Billiards _billiards;
 	QString _durationTime;           // 开局时长
 	double _money;                   // 消费金额
+
+	QPixmap _qPixmap;                // 未开局图片...
+	QPixmap _qPixmapPlaying;         // 开局进行中图片...
 };
 
 #endif // GUIBILLIARDSTABLE_H
