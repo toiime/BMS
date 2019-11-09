@@ -42,6 +42,9 @@
     <Filter Include="DbModule">
       <UniqueIdentifier>{c19aeeb7-dee5-4884-8355-8937a3a4b43e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Bill">
+      <UniqueIdentifier>{bd74591d-8a63-40a6-a0c7-14d04f3e3a5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -98,6 +101,15 @@
     <ClCompile Include="Billiards\GuiBilliardsTable.cpp">
       <Filter>Billiards</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_GuiPay.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_GuiPay.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="Bill\GuiPay.cpp">
+      <Filter>Bill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bms.h">
@@ -127,6 +139,12 @@
     <CustomBuild Include="Billiards\GuiBilliardsTable.h">
       <Filter>Billiards</Filter>
     </CustomBuild>
+    <CustomBuild Include="Bill\GuiPay.ui">
+      <Filter>Bill</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Bill\GuiPay.h">
+      <Filter>Bill</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_bms.h">
@@ -154,6 +172,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GuiBilliardsTable.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_GuiPay.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

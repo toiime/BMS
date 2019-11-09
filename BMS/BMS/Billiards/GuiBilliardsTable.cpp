@@ -1,7 +1,9 @@
 ﻿#include <QMenu>
 #include <QDebug>
 #include <QMessageBox>
+
 #include "GuiBilliardsTable.h"
+#include "./Bill/GuiPay.h"
 
 GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
 	: QWidget(parent) {
@@ -76,6 +78,14 @@ void GuiBilliardsTable::SlotBegin() {
 }
 
 void GuiBilliardsTable::SlotEnd() {
+
+	_billiards.SetEndTime(QDateTime::currentDateTime());
+
+	GuiPay guiPay;
+	guiPay.SetBilliards(_billiards);
+	guiPay.UpdateUi();
+	guiPay.exec();
+
 	ui.labelPic->setPixmap(_qPixmap);
 	_billiards.SetIsBegin(false);
 }
