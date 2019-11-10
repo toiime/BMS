@@ -15,17 +15,21 @@ public:
 	~BMS();
 
 private:
-	void InitTabWidgetTableType();
-	void UpdateTableType();
+	void InitTabWidgetTableType();    // 初始化球桌类型列表
+	void UpdateTableType();           // 更新球桌类型列表
 
-	void InitTabWidgetTable();
-	void UpdateBilliardsTable();
+	void InitTabWidgetTable();        // 初始化球桌列表
+	void UpdateBilliardsTable();      // 更新球桌列表
+
+	void InitTabWidgetBill();         // 初始化历史账单列表
+	void UpdateBill();                // 更新历史账单列表
 
 	void InitBusinessPage();
 
 private:
 	void SlotBtnBusiness();         // 营业
 	void SlotBtnSettings();         // 设置
+	void SlotBtnBill();             // 历史账单
 	void SlotAddBilliardsType();    // 添加球桌类型
 	void SlotDeleteBilliardsType(); // 删除球桌类型
 	void SlotAddBilliards();        // 添加球桌

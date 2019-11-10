@@ -24,6 +24,13 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="pushButtonBill">
+       <property name="text">
+        <string>历史</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="pushButtonSettings">
        <property name="text">
         <string>设置</string>
@@ -48,7 +55,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidgetMainWindow">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageBusiness">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -69,11 +76,27 @@
                <x>0</x>
                <y>0</y>
                <width>1011</width>
-               <height>551</height>
+               <height>549</height>
               </rect>
              </property>
             </widget>
            </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pageBill">
+      <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <item>
+        <widget class="QGroupBox" name="groupBox_3">
+         <property name="title">
+          <string>历史</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QTableWidget" name="tableWidgetBill"/>
           </item>
          </layout>
         </widget>
@@ -91,7 +114,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>0</number>
+             <number>1</number>
             </property>
             <widget class="QWidget" name="tab">
              <attribute name="title">
@@ -198,7 +221,7 @@
      </widget>
     </widget>
    </item>
-   <item alignment="Qt::AlignRight">
+   <item>
     <widget class="QLabel" name="labelCurrentTime">
      <property name="text">
       <string/>

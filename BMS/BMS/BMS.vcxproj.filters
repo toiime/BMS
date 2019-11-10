@@ -110,6 +110,12 @@
     <ClCompile Include="Bill\GuiPay.cpp">
       <Filter>Bill</Filter>
     </ClCompile>
+    <ClCompile Include="Bill\Bill.cpp">
+      <Filter>Bill</Filter>
+    </ClCompile>
+    <ClCompile Include="Bill\BillManager.cpp">
+      <Filter>Bill</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bms.h">
@@ -176,6 +182,12 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_GuiPay.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bill\Bill.h">
+      <Filter>Bill</Filter>
+    </ClInclude>
+    <ClInclude Include="Bill\BillManager.h">
+      <Filter>Bill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

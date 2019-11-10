@@ -1,8 +1,13 @@
-#include "GuiPay.h"
+﻿#include "GuiPay.h"
+#include "../Global/GlobalDefine.h"
+#include "../Bill/Bill.h"
+#include "../Bill/BillManager.h"
 
 GuiPay::GuiPay(QWidget *parent)
 	: QDialog(parent) {
 	ui.setupUi(this);
+
+	_payMoney = 0.0;
 
 	ui.lineEditTableNum->setEnabled(false);
 	ui.lineEditTableType->setEnabled(false);
@@ -28,20 +33,35 @@ void GuiPay::UpdateUi() {
 	ui.lineEditTableNum->setText(QString::number(_billiards.GetTableNum()));
 	ui.lineEditTableType->setText(_billiards.GetBilliardsType().GetTypeName());
 	ui.lineEditPricePerHour->setText(QString::number(_billiards.GetBilliardsType().GetPricePerHour()));
-	ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString("yyyy-MM-dd hh:mm:ss"));
-	ui.lineEditPayTime->setText(_billiards.GetEndTime().toString("yyyy-MM-dd hh:mm:ss"));
+	ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString(gTimeFormat));
+	ui.lineEditPayTime->setText(_billiards.GetEndTime().toString(gTimeFormat));
 
 	QDateTime currentDateTime = QDateTime::currentDateTime();
 	int mSecond = currentDateTime.toMSecsSinceEpoch() - _billiards.GetBeginTime().toMSecsSinceEpoch();
 
-	ui.lineEditDurationTime->setText(QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss"));
-	ui.lineEditPayMoney->setText(QString::number(mSecond * 0.001 / 3600.0 * _billiards.GetBilliardsType().GetPricePerHour()));
+	_durationTime = QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss");
+	_payMoney = mSecond * 0.001 / 3600.0 * _billiards.GetBilliardsType().GetPricePerHour();
+
+	ui.lineEditDurationTime->setText(_durationTime);
+	ui.lineEditPayMoney->setText(QString::number(_payMoney));
 }
 
 void GuiPay::SlotBtnOk() {
-	close();
+
+	// 创建账单...
+	Bill bill;
+	bill.SetTableNum(QString::number(_billiards.GetTableNum()));
+	bill.SetTableType(_billiards.GetBilliardsType().GetTypeName());
+	bill.SetPricePerHour(_billiards.GetBilliardsType().GetPricePerHour());
+	bill.SetBeginTime(_billiards.GetBeginTime().toString(gTimeFormat));
+	bill.SetPayTime(_billiards.GetEndTime().toString(gTimeFormat));
+	bill.SetDurationTime(_durationTime);
+	bill.SetPayMoney(_payMoney);
+	BillManager::GetInstance()->AddBill(bill);
+
+	accept();
 }
 
 void GuiPay::SlotBtnCancel() {
-	close();
+	reject();
 }

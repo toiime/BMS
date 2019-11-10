@@ -3,6 +3,7 @@
 
 #include "./Billiards/BilliardsType.h"
 #include "./Billiards/Billiards.h"
+#include "./Bill/Bill.h"
 
 // 数据库操作类...
 class DbExecute {
@@ -23,11 +24,17 @@ public:
 	static int DeleteFromBilliardsTable(QString sqlWhere);
 	static int QueryFromBilliardsTable(QVector<Billiards>& vecBilliards);
 
+	// 表 bill
+	static int InsertToBill(Bill& bill);
+	static int QueryFromBill(QVector<Bill>& vecBill);
+
 private:
 	// 创建表 tableType
 	static int CreateTableTableType();
 	// 创建表 billiardsTable
 	static int CreateTableBilliardsTable();
+	// 创建表 bill
+	static int CreateBill();
 
 	// 判断表是否存在
 	static bool IsExistTable(QString tableName);

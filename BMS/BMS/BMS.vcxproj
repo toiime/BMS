@@ -82,6 +82,8 @@
     <ClCompile Include="Billiards\GuiAddBilliardsTable.cpp" />
     <ClCompile Include="Billiards\GuiAddBilliardsType.cpp" />
     <ClCompile Include="Billiards\GuiBilliardsTable.cpp" />
+    <ClCompile Include="Bill\Bill.cpp" />
+    <ClCompile Include="Bill\BillManager.cpp" />
     <ClCompile Include="Bill\GuiPay.cpp" />
     <ClCompile Include="bms.cpp" />
     <ClCompile Include="DbModule\DbExecute.cpp" />
@@ -191,6 +193,8 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -D_UNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -DQT_SQL_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I$(QTDIR)\include\QtSql" "-I.\AddBilliards" "-I.\Billiards" "-I.\Bill"</Command>
     </CustomBuild>
+    <ClInclude Include="Bill\Bill.h" />
+    <ClInclude Include="Bill\BillManager.h" />
     <ClInclude Include="DbModule\DbExecute.h" />
     <ClInclude Include="GeneratedFiles\ui_bms.h" />
     <ClInclude Include="GeneratedFiles\ui_GuiAddBilliardsTable.h" />

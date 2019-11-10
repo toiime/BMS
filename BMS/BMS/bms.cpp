@@ -9,6 +9,7 @@
 #include "./Billiards/GuiAddBilliardsTable.h"
 #include "./Billiards/BilliardsManager.h"
 #include "./Billiards/GuiBilliardsTable.h"
+#include "./Bill/BillManager.h"
 
 BMS::BMS(QWidget *parent)
 	: QWidget(parent) {
@@ -23,10 +24,12 @@ BMS::BMS(QWidget *parent)
 	InitTabWidgetTableType();
 	InitTabWidgetTable();
 	InitBusinessPage();
+	InitTabWidgetBill();
 
 
 	connect(ui.pushButtonBusiness, &QPushButton::clicked, this, &BMS::SlotBtnBusiness);
 	connect(ui.pushButtonSettings, &QPushButton::clicked, this, &BMS::SlotBtnSettings);
+	connect(ui.pushButtonBill, &QPushButton::clicked, this, &BMS::SlotBtnBill);
 	connect(ui.pushButtonAddBilliardsType, &QPushButton::clicked, this, &BMS::SlotAddBilliardsType);
 	connect(ui.pushButtonDeleteTableType, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsType);
 	connect(ui.pushButtonAddBilliards, &QPushButton::clicked, this, &BMS::SlotAddBilliards);
@@ -109,6 +112,52 @@ void BMS::UpdateBilliardsTable() {
 	}
 }
 
+void BMS::InitTabWidgetBill() {
+	QStringList header;
+	header << QStringLiteral("球桌编号")
+		<< QStringLiteral("球桌类型")
+		<< QStringLiteral("小时单价")
+		<< QStringLiteral("开局时间")
+		<< QStringLiteral("结账时间")
+		<< QStringLiteral("消费时长")
+		<< QStringLiteral("消费金额");
+	// 设置列数...
+	ui.tableWidgetBill->setColumnCount(header.size());
+	// 设置表头...
+	ui.tableWidgetBill->setHorizontalHeaderLabels(header);
+	// 去掉垂直表头...
+	ui.tableWidgetBill->verticalHeader()->setVisible(false);
+	// 设置不可编辑...
+	ui.tableWidgetBill->setEditTriggers(QAbstractItemView::NoEditTriggers);
+	// 整行选中...
+	ui.tableWidgetBill->setSelectionBehavior(QAbstractItemView::SelectRows);
+	// 失去焦点 选中没有蓝色的 还挺好看...
+	ui.tableWidgetBill->setFocusPolicy(Qt::NoFocus);
+
+	BillManager::GetInstance()->LoadBillsFromDb();
+	UpdateBill();
+}
+
+void BMS::UpdateBill() {
+	ui.tableWidgetBill->setRowCount(0);
+
+	QVector<Bill> vecBill = BillManager::GetInstance()->GetBills();
+
+	for (auto& v : vecBill) {
+		int index = 0;
+		int rowCount = ui.tableWidgetBill->rowCount();
+		ui.tableWidgetBill->insertRow(rowCount);
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetTableNum()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetTableType()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v.GetPricePerHour())));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetBeginTime()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetPayTime()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetDurationTime()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v.GetPayMoney())));
+		ui.tableWidgetBill->item(rowCount, 0)->setData(Qt::UserRole, v.GetUuid());
+	}
+}
+
 void BMS::InitBusinessPage() {
 
 	QGridLayout *qGridLayout = new QGridLayout;
@@ -127,11 +176,15 @@ void BMS::InitBusinessPage() {
 }
 
 void BMS::SlotBtnBusiness() {
-	ui.stackedWidgetMainWindow->setCurrentIndex(0);
+	ui.stackedWidgetMainWindow->setCurrentWidget(ui.pageBusiness);
 }
 
 void BMS::SlotBtnSettings() {
-	ui.stackedWidgetMainWindow->setCurrentIndex(1);
+	ui.stackedWidgetMainWindow->setCurrentWidget(ui.pageSettings);
+}
+
+void BMS::SlotBtnBill() {
+	ui.stackedWidgetMainWindow->setCurrentWidget(ui.pageBill);
 }
 
 void BMS::SlotAddBilliardsType() {

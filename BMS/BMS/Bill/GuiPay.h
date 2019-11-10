@@ -26,6 +26,9 @@ private:
 	Ui::GuiPay ui;
 
 	Billiards _billiards;
+
+	QString _durationTime;
+	double _payMoney;
 };
 
 #endif // GUIPAY_H

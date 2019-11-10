@@ -3,7 +3,9 @@
 #include <QMessageBox>
 
 #include "GuiBilliardsTable.h"
-#include "./Bill/GuiPay.h"
+#include "../Bill/GuiPay.h"
+#include "../Global/GlobalDefine.h"
+
 
 GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
 	: QWidget(parent) {
@@ -40,7 +42,7 @@ void GuiBilliardsTable::UpdateUi() {
 	ui.lineEditPerHour->setText(QString::number(_billiards.GetBilliardsType().GetPricePerHour()));
 
 	if (_billiards.GetIsBegin()) {
-		ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString("yyyy-MM-dd hh:mm:ss"));
+		ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString(gTimeFormat));
 		ui.lineEditDurationTime->setText(_durationTime);
 		ui.lineEditMoney->setText(QString::number(_money));
 	}
@@ -79,12 +81,21 @@ void GuiBilliardsTable::SlotBegin() {
 
 void GuiBilliardsTable::SlotEnd() {
 
+	if (!_billiards.GetIsBegin()) {
+		QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("本桌未开局!"));
+		return;
+	}
+
 	_billiards.SetEndTime(QDateTime::currentDateTime());
 
 	GuiPay guiPay;
 	guiPay.SetBilliards(_billiards);
 	guiPay.UpdateUi();
-	guiPay.exec();
+	int rv = guiPay.exec();
+
+	if (rv != QDialog::Accepted) {
+		return;
+	}
 
 	ui.labelPic->setPixmap(_qPixmap);
 	_billiards.SetIsBegin(false);
