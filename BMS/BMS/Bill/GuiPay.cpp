@@ -33,11 +33,12 @@ void GuiPay::UpdateUi() {
 	ui.lineEditTableNum->setText(QString::number(_billiards.GetTableNum()));
 	ui.lineEditTableType->setText(_billiards.GetBilliardsType().GetTypeName());
 	ui.lineEditPricePerHour->setText(QString::number(_billiards.GetBilliardsType().GetPricePerHour()));
-	ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString(gTimeFormat));
-	ui.lineEditPayTime->setText(_billiards.GetEndTime().toString(gTimeFormat));
+	ui.lineEditBeginTime->setText(_billiards.GetBeginTime());
+	ui.lineEditPayTime->setText(_billiards.GetEndTime());
 
 	QDateTime currentDateTime = QDateTime::currentDateTime();
-	int mSecond = currentDateTime.toMSecsSinceEpoch() - _billiards.GetBeginTime().toMSecsSinceEpoch();
+	int mSecond = currentDateTime.toMSecsSinceEpoch()
+		- QDateTime::fromString(_billiards.GetBeginTime(), gTimeFormat).toMSecsSinceEpoch();
 
 	_durationTime = QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss");
 	_payMoney = mSecond * 0.001 / 3600.0 * _billiards.GetBilliardsType().GetPricePerHour();
@@ -53,8 +54,8 @@ void GuiPay::SlotBtnOk() {
 	bill.SetTableNum(QString::number(_billiards.GetTableNum()));
 	bill.SetTableType(_billiards.GetBilliardsType().GetTypeName());
 	bill.SetPricePerHour(_billiards.GetBilliardsType().GetPricePerHour());
-	bill.SetBeginTime(_billiards.GetBeginTime().toString(gTimeFormat));
-	bill.SetPayTime(_billiards.GetEndTime().toString(gTimeFormat));
+	bill.SetBeginTime(_billiards.GetBeginTime());
+	bill.SetPayTime(_billiards.GetEndTime());
 	bill.SetDurationTime(_durationTime);
 	bill.SetPayMoney(_payMoney);
 	BillManager::GetInstance()->AddBill(bill);

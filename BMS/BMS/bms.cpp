@@ -185,6 +185,7 @@ void BMS::SlotBtnSettings() {
 
 void BMS::SlotBtnBill() {
 	ui.stackedWidgetMainWindow->setCurrentWidget(ui.pageBill);
+	UpdateBill();
 }
 
 void BMS::SlotAddBilliardsType() {

@@ -22,6 +22,7 @@ public:
 	// 表 billiardsTable
 	static int InsertToBilliardsTable(Billiards& billiards);
 	static int DeleteFromBilliardsTable(QString sqlWhere);
+	static int UpdateToBilliardsTable(Billiards& billiards);
 	static int QueryFromBilliardsTable(QVector<Billiards>& vecBilliards);
 
 	// 表 bill

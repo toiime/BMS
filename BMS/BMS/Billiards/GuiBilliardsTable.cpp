@@ -5,6 +5,7 @@
 #include "GuiBilliardsTable.h"
 #include "../Bill/GuiPay.h"
 #include "../Global/GlobalDefine.h"
+#include "DbModule/DbExecute.h"
 
 
 GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
@@ -20,7 +21,6 @@ GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
 
 	_qPixmap = QPixmap(":/Pic/Res/billiardsTable.png");
 	_qPixmap = _qPixmap.scaled(QSize(250, 130));
-	ui.labelPic->setPixmap(_qPixmap);
 
 	_qPixmapPlaying = QPixmap(":/Pic/Res/billiardsTablePlaying.png");
 	_qPixmapPlaying = _qPixmapPlaying.scaled(QSize(250, 130));
@@ -42,19 +42,22 @@ void GuiBilliardsTable::UpdateUi() {
 	ui.lineEditPerHour->setText(QString::number(_billiards.GetBilliardsType().GetPricePerHour()));
 
 	if (_billiards.GetIsBegin()) {
-		ui.lineEditBeginTime->setText(_billiards.GetBeginTime().toString(gTimeFormat));
+		ui.lineEditBeginTime->setText(_billiards.GetBeginTime());
 		ui.lineEditDurationTime->setText(_durationTime);
 		ui.lineEditMoney->setText(QString::number(_money));
+		ui.labelPic->setPixmap(_qPixmapPlaying);
 	}
 	else {
 		ui.lineEditBeginTime->setText(QStringLiteral("未开局"));
 		ui.lineEditDurationTime->setText(QStringLiteral("未开局"));
 		ui.lineEditMoney->setText(QStringLiteral("未开局"));
+		ui.labelPic->setPixmap(_qPixmap);
 	}
 }
 
 void GuiBilliardsTable::UpdateData(QDateTime currentDateTime) {
-	int mSecond = currentDateTime.toMSecsSinceEpoch() - _billiards.GetBeginTime().toMSecsSinceEpoch();
+	int mSecond = currentDateTime.toMSecsSinceEpoch()
+		- QDateTime::fromString(_billiards.GetBeginTime(), gTimeFormat).toMSecsSinceEpoch();
 	_durationTime = QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss");
 	_money = mSecond * 0.001 / 3600.0 * _billiards.GetBilliardsType().GetPricePerHour();
 }
@@ -74,9 +77,12 @@ void GuiBilliardsTable::SlotBegin() {
 	}
 
 	ui.labelPic->setPixmap(_qPixmapPlaying);
-	_billiards.SetBeginTime(QDateTime::currentDateTime());
+	_billiards.SetBeginTime(QDateTime::currentDateTime().toString(gTimeFormat));
 	_billiards.SetIsBegin(true);
 	UpdateUi();
+
+	// 更新数据库信息...
+	DbExecute::UpdateToBilliardsTable(_billiards);
 }
 
 void GuiBilliardsTable::SlotEnd() {
@@ -86,7 +92,7 @@ void GuiBilliardsTable::SlotEnd() {
 		return;
 	}
 
-	_billiards.SetEndTime(QDateTime::currentDateTime());
+	_billiards.SetEndTime(QDateTime::currentDateTime().toString(gTimeFormat));
 
 	GuiPay guiPay;
 	guiPay.SetBilliards(_billiards);
@@ -99,4 +105,7 @@ void GuiBilliardsTable::SlotEnd() {
 
 	ui.labelPic->setPixmap(_qPixmap);
 	_billiards.SetIsBegin(false);
+
+	// 更新数据库信息...
+	DbExecute::UpdateToBilliardsTable(_billiards);
 }

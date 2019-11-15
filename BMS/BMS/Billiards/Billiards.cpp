@@ -33,19 +33,19 @@ BilliardsType Billiards::GetBilliardsType() {
 	return _billiardsType;
 }
 
-void Billiards::SetBeginTime(QDateTime beginTime) {
+void Billiards::SetBeginTime(QString beginTime) {
 	_beginTime = beginTime;
 }
 
-QDateTime Billiards::GetBeginTime() {
+QString Billiards::GetBeginTime() {
 	return _beginTime;
 }
 
-void Billiards::SetEndTime(QDateTime endTime) {
+void Billiards::SetEndTime(QString endTime) {
 	_endTime = endTime;
 }
 
-QDateTime Billiards::GetEndTime() {
+QString Billiards::GetEndTime() {
 	return _endTime;
 }
 

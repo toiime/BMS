@@ -6,6 +6,7 @@
 const QString gDbType = "QSQLITE";                 // 数据库类型
 const QString gConnectionName = "mainSql";         // 数据库连接名
 const QString gDbName = "./DbModule/BMS.db";       // 数据库名称
+
 const QString gTimeFormat = "yyyy-MM-dd hh:mm:ss"; // 时间格式化
 
 
