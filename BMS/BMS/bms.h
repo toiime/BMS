@@ -15,6 +15,9 @@ public:
 	~BMS();
 
 private:
+
+	void InitStyle();
+
 	void InitTabWidgetTableType();    // 初始化球桌类型列表
 	void UpdateTableType();           // 更新球桌类型列表
 

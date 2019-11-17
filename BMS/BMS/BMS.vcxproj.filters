@@ -116,6 +116,9 @@
     <ClCompile Include="Bill\BillManager.cpp">
       <Filter>Bill</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\qrc_qss.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bms.h">
@@ -150,6 +153,9 @@
     </CustomBuild>
     <CustomBuild Include="Bill\GuiPay.h">
       <Filter>Bill</Filter>
+    </CustomBuild>
+    <CustomBuild Include="qss.qrc">
+      <Filter>Resource Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿#include <QDebug>
 #include <QMessageBox>
 #include <QTimer>
+#include <QFile>
 
 #include "bms.h"
 
@@ -34,6 +35,8 @@ BMS::BMS(QWidget *parent)
 	connect(ui.pushButtonDeleteTableType, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsType);
 	connect(ui.pushButtonAddBilliards, &QPushButton::clicked, this, &BMS::SlotAddBilliards);
 	connect(ui.pushButtonDeleteTable, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsTable);
+
+	InitStyle();
 }
 
 BMS::~BMS() {
@@ -41,6 +44,20 @@ BMS::~BMS() {
 	if (_qTimer) {
 		delete _qTimer;
 		_qTimer = nullptr;
+	}
+}
+
+void BMS::InitStyle() {
+	// 加载样式表
+	// QFile file(":/qssFile/qss/flatwhite.css");
+	// QFile file(":/qssFile/qss/lightblue.css");
+	QFile file(":/qssFile/qss/psblack.css");
+	if (file.open(QFile::ReadOnly)) {
+		QString qss = QLatin1String(file.readAll());
+		QString paletteColor = qss.mid(20, 7);
+		qApp->setPalette(QPalette(QColor(paletteColor)));
+		qApp->setStyleSheet(qss);
+		file.close();
 	}
 }
 
