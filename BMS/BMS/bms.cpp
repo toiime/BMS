@@ -36,7 +36,7 @@ BMS::BMS(QWidget *parent)
 	connect(ui.pushButtonAddBilliards, &QPushButton::clicked, this, &BMS::SlotAddBilliards);
 	connect(ui.pushButtonDeleteTable, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsTable);
 
-	InitStyle();
+	// InitStyle();
 }
 
 BMS::~BMS() {
