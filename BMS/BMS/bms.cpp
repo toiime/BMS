@@ -35,6 +35,8 @@ BMS::BMS(QWidget *parent)
 	connect(ui.pushButtonDeleteTableType, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsType);
 	connect(ui.pushButtonAddBilliards, &QPushButton::clicked, this, &BMS::SlotAddBilliards);
 	connect(ui.pushButtonDeleteTable, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsTable);
+	connect(ui.pushButtonEditBallType, &QPushButton::clicked, this, &BMS::SlotEditBilliardsType);
+	connect(ui.pushButtonEditBall, &QPushButton::clicked, this, &BMS::SlotEditBilliards);
 
 	// InitStyle();
 }
@@ -84,14 +86,14 @@ void BMS::InitTabWidgetTableType() {
 void BMS::UpdateTableType() {
 	ui.tableWidgetTableType->setRowCount(0);
 
-	QVector<BilliardsType> tableTypes = BilliardsManager::GetInstance()->GetTableTypes();
+	QVector<BilliardsType*> tableTypes = BilliardsManager::GetInstance()->GetTableTypes();
 
 	for (auto& v : tableTypes) {
 		int rowCount = ui.tableWidgetTableType->rowCount();
 		ui.tableWidgetTableType->insertRow(rowCount);
-		ui.tableWidgetTableType->setItem(rowCount, 0, new QTableWidgetItem(v.GetTypeName()));
-		ui.tableWidgetTableType->setItem(rowCount, 1, new QTableWidgetItem(QString::number(v.GetPricePerHour())));
-		ui.tableWidgetTableType->item(rowCount, 0)->setData(Qt::UserRole, v.GetUuid());
+		ui.tableWidgetTableType->setItem(rowCount, 0, new QTableWidgetItem(v->GetTypeName()));
+		ui.tableWidgetTableType->setItem(rowCount, 1, new QTableWidgetItem(QString::number(v->GetPricePerHour())));
+		ui.tableWidgetTableType->item(rowCount, 0)->setData(Qt::UserRole, v->GetUuid());
 	}
 }
 
@@ -118,14 +120,14 @@ void BMS::InitTabWidgetTable() {
 void BMS::UpdateBilliardsTable() {
 	ui.tableWidgetTables->setRowCount(0);
 
-	QVector<Billiards> billiardsTables = BilliardsManager::GetInstance()->GetBilliardsTables();
+	QVector<Billiards*> billiardsTables = BilliardsManager::GetInstance()->GetBilliardsTables();
 
 	for (auto& v : billiardsTables) {
 		int rowCount = ui.tableWidgetTables->rowCount();
 		ui.tableWidgetTables->insertRow(rowCount);
-		ui.tableWidgetTables->setItem(rowCount, 0, new QTableWidgetItem(QString::number(v.GetTableNum())));
-		ui.tableWidgetTables->setItem(rowCount, 1, new QTableWidgetItem(v.GetBilliardsType().GetTypeName()));
-		ui.tableWidgetTables->item(rowCount, 0)->setData(Qt::UserRole, v.GetUuid());
+		ui.tableWidgetTables->setItem(rowCount, 0, new QTableWidgetItem(QString::number(v->GetTableNum())));
+		ui.tableWidgetTables->setItem(rowCount, 1, new QTableWidgetItem(v->GetBilliardsType().GetTypeName()));
+		ui.tableWidgetTables->item(rowCount, 0)->setData(Qt::UserRole, v->GetUuid());
 	}
 }
 
@@ -150,6 +152,9 @@ void BMS::InitTabWidgetBill() {
 	ui.tableWidgetBill->setSelectionBehavior(QAbstractItemView::SelectRows);
 	// 失去焦点 选中没有蓝色的 还挺好看...
 	ui.tableWidgetBill->setFocusPolicy(Qt::NoFocus);
+
+	ui.tableWidgetBill->setColumnWidth(3, 188);
+	ui.tableWidgetBill->setColumnWidth(4, 188);
 
 	BillManager::GetInstance()->LoadBillsFromDb();
 	UpdateBill();
@@ -178,13 +183,13 @@ void BMS::UpdateBill() {
 void BMS::InitBusinessPage() {
 
 	QGridLayout *qGridLayout = new QGridLayout;
-	QVector<Billiards> vecBilliards = BilliardsManager::GetInstance()->GetBilliardsTables();
+	QVector<Billiards*> vecBilliards = BilliardsManager::GetInstance()->GetBilliardsTables();
 	int colCount = 6;
 	int index = 0;
 	for (auto& v : vecBilliards) {
 		GuiBilliardsTable* guiBilliardsTable = new GuiBilliardsTable(this);
 		_vecGuiBilliardsTable.push_back(guiBilliardsTable);
-		guiBilliardsTable->SetBilliards(v);
+		guiBilliardsTable->SetBilliards(*v);
 		guiBilliardsTable->UpdateUi();
 		qGridLayout->addWidget(guiBilliardsTable, index / colCount, index % colCount);
 		++index;
@@ -233,6 +238,26 @@ void BMS::SlotDeleteBilliardsType() {
 	BilliardsManager::GetInstance()->DeleteTableType(uuid);
 }
 
+void BMS::SlotEditBilliardsType() {
+	int rowIndex = ui.tableWidgetTableType->currentRow();
+	if (rowIndex < 0) {
+		QMessageBox::information(this, "Note", "No Data Selected");
+		return;
+	}
+
+	QString uuid = ui.tableWidgetTableType->item(rowIndex, 0)->data(Qt::UserRole).toString();
+	ui.tableWidgetTableType->setCurrentItem(nullptr);
+
+	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(uuid);
+	if (!billiardsType) return;
+
+	GuiAddBilliardsType addTypeDlg(billiardsType);
+
+	if (addTypeDlg.exec() == QDialog::Accepted) {
+		UpdateTableType();
+	}
+}
+
 void BMS::SlotAddBilliards() {
 	GuiAddBilliardsTable addTableDlg;
 
@@ -259,6 +284,25 @@ void BMS::SlotDeleteBilliardsTable() {
 	ui.tableWidgetTables->setCurrentItem(nullptr);
 
 	BilliardsManager::GetInstance()->DeleteBilliardsTable(uuid);
+}
+
+void BMS::SlotEditBilliards() {
+	int rowIndex = ui.tableWidgetTables->currentRow();
+	if (rowIndex < 0) {
+		QMessageBox::information(this, "Note", "No Data Selected");
+		return;
+	}
+
+	QString uuid = ui.tableWidgetTables->item(rowIndex, 0)->data(Qt::UserRole).toString();
+	ui.tableWidgetTables->setCurrentItem(nullptr);
+
+	Billiards* billiards = BilliardsManager::GetInstance()->FindBilliards(uuid);
+	if (!billiards) return;
+
+	GuiAddBilliardsTable addTableDlg(billiards);
+	if (addTableDlg.exec() == QDialog::Accepted) {
+		UpdateBilliardsTable();
+	}
 }
 
 void BMS::SlotTimeOut() {

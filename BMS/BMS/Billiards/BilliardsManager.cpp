@@ -13,24 +13,35 @@ void BilliardsManager::LoadTableTypeFromDb() {
 	DbExecute::QueryFromTableType(_vecBilliardsType);
 }
 
-void BilliardsManager::AddTableType(QString typeName, double pricePerHour) {
-	BilliardsType billiardsType;
+BilliardsType* BilliardsManager::CreateTableType() {
+	BilliardsType* billiardsType = new BilliardsType;
 
 	QUuid id = QUuid::createUuid();
 	QString strId = id.toString();
 
-	billiardsType.SetUuid(strId);
-	billiardsType.SetTypeName(typeName);
-	billiardsType.SetPricePerHour(pricePerHour);
+	billiardsType->SetUuid(strId);
 
 	_vecBilliardsType.push_back(billiardsType);   // 内存
-
 	DbExecute::InsertToTableType(billiardsType);  // 数据库
+
+	return billiardsType;
+}
+
+void BilliardsManager::UpdateTableType(BilliardsType* billiardsType) {
+	if (!billiardsType) return;
+
+	for (auto& v : _vecBilliardsType) {
+		if (v->GetUuid() == billiardsType->GetUuid()) {
+			*v = *billiardsType;
+		}
+	}
+
+	DbExecute::UpdateToTableType(billiardsType);  // 数据库
 }
 
 void BilliardsManager::DeleteTableType(QString uuid) {
 	for (auto iter = _vecBilliardsType.begin(); iter != _vecBilliardsType.end();) {
-		if (iter->GetUuid() == uuid) {
+		if ((*iter)->GetUuid() == uuid) {
 			iter = _vecBilliardsType.erase(iter);
 		}
 		else {
@@ -42,7 +53,17 @@ void BilliardsManager::DeleteTableType(QString uuid) {
 	DbExecute::DeleteFromTableType(sqlWhere);
 }
 
-QVector<BilliardsType> BilliardsManager::GetTableTypes() {
+BilliardsType* BilliardsManager::FindBilliardsType(QString id) {
+	for (auto& v : _vecBilliardsType) {
+		if (v->GetUuid() == id) {
+			return v;
+		}
+	}
+
+	return nullptr;
+}
+
+QVector<BilliardsType*> BilliardsManager::GetTableTypes() {
 	return _vecBilliardsType;
 }
 
@@ -50,30 +71,35 @@ void BilliardsManager::LoadTableFromDb() {
 	DbExecute::QueryFromBilliardsTable(_vecBilliards);
 }
 
-void BilliardsManager::AddBilliardsTable(int tableNum, QString tableTypeid) {
-	Billiards billiards;
+Billiards* BilliardsManager::CreateBilliardsTable() {
+	Billiards* billiards = new Billiards;
 
 	QUuid id = QUuid::createUuid();
 	QString strId = id.toString();
 
-	billiards.SetUuid(strId);
-	billiards.SetTableNum(tableNum);
+	billiards->SetUuid(strId);
 
-	for (auto& v : _vecBilliardsType) {
-		if (tableTypeid == v.GetUuid()) {
-			billiards.SetBilliardsType(v);
-			break;
+	_vecBilliards.push_back(billiards);            // 内存
+	DbExecute::InsertToBilliardsTable(billiards);  // 数据库
+
+	return billiards;
+}
+
+void BilliardsManager::UpdateBilliardsTable(Billiards* billiards) {
+	if (!billiards) return;
+
+	for (auto& v : _vecBilliards) {
+		if (v->GetUuid() == billiards->GetUuid()) {
+			*v = *billiards;
 		}
 	}
 
-	_vecBilliards.push_back(billiards);   // 内存
-
-	DbExecute::InsertToBilliardsTable(billiards);  // 数据库
+	DbExecute::UpdateToBilliardsTable(billiards);
 }
 
 void BilliardsManager::DeleteBilliardsTable(QString uuid) {
 	for (auto iter = _vecBilliards.begin(); iter != _vecBilliards.end();) {
-		if (iter->GetUuid() == uuid) {
+		if ((*iter)->GetUuid() == uuid) {
 			iter = _vecBilliards.erase(iter);
 		}
 		else {
@@ -85,7 +111,17 @@ void BilliardsManager::DeleteBilliardsTable(QString uuid) {
 	DbExecute::DeleteFromBilliardsTable(sqlWhere);
 }
 
-QVector<Billiards> BilliardsManager::GetBilliardsTables() {
+Billiards* BilliardsManager::FindBilliards(QString id) {
+	for (auto& v : _vecBilliards) {
+		if (v->GetUuid() == id) {
+			return v;
+		}
+	}
+
+	return nullptr;
+}
+
+QVector<Billiards*> BilliardsManager::GetBilliardsTables() {
 	return _vecBilliards;
 }
 

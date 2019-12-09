@@ -15,15 +15,16 @@ public:
 	static int InitDb();
 
 	// 表 tableType
-	static int InsertToTableType(BilliardsType& billiardsType);
+	static int InsertToTableType(BilliardsType*& billiardsType);
 	static int DeleteFromTableType(QString sqlWhere);
-	static int QueryFromTableType(QVector<BilliardsType>& vecBilliardsType);
+	static int UpdateToTableType(BilliardsType* billiardsType);
+	static int QueryFromTableType(QVector<BilliardsType*>& vecBilliardsType);
 
 	// 表 billiardsTable
-	static int InsertToBilliardsTable(Billiards& billiards);
+	static int InsertToBilliardsTable(Billiards* billiards);
 	static int DeleteFromBilliardsTable(QString sqlWhere);
-	static int UpdateToBilliardsTable(Billiards& billiards);
-	static int QueryFromBilliardsTable(QVector<Billiards>& vecBilliards);
+	static int UpdateToBilliardsTable(Billiards* billiards);
+	static int QueryFromBilliardsTable(QVector<Billiards*>& vecBilliards);
 
 	// 表 bill
 	static int InsertToBill(Bill& bill);

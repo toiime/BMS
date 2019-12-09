@@ -55,7 +55,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidgetMainWindow">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="pageBusiness">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -75,8 +75,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>1011</width>
-               <height>549</height>
+               <width>999</width>
+               <height>530</height>
               </rect>
              </property>
             </widget>
@@ -114,7 +114,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>1</number>
+             <number>0</number>
             </property>
             <widget class="QWidget" name="tab">
              <attribute name="title">
@@ -154,7 +154,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_2">
+                 <widget class="QPushButton" name="pushButtonEditBallType">
                   <property name="text">
                    <string>编辑球桌类型</string>
                   </property>
@@ -202,7 +202,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="pushButton_4">
+                 <widget class="QPushButton" name="pushButtonEditBall">
                   <property name="text">
                    <string>编辑球桌</string>
                   </property>

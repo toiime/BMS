@@ -4,13 +4,18 @@
 #include <QDialog>
 #include "ui_GuiAddBilliardsType.h"
 
+class BilliardsType;
+
 // 添加球桌类型
 class GuiAddBilliardsType : public QDialog {
 	Q_OBJECT
 
 public:
-	GuiAddBilliardsType(QWidget *parent = 0);
+	GuiAddBilliardsType(BilliardsType* billiardsType = nullptr, QWidget *parent = 0);
 	~GuiAddBilliardsType();
+
+private:
+	void InitUi();
 
 private:
 	void SlotBtnOk();
@@ -18,6 +23,8 @@ private:
 
 private:
 	Ui::GuiAddBilliardsType ui;
+
+	BilliardsType* _billiardsType;
 };
 
 #endif // GUIADDBILLIARDSTYPE_H

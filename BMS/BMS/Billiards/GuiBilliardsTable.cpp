@@ -82,7 +82,7 @@ void GuiBilliardsTable::SlotBegin() {
 	UpdateUi();
 
 	// 更新数据库信息...
-	DbExecute::UpdateToBilliardsTable(_billiards);
+	DbExecute::UpdateToBilliardsTable(&_billiards);
 }
 
 void GuiBilliardsTable::SlotEnd() {
@@ -107,5 +107,5 @@ void GuiBilliardsTable::SlotEnd() {
 	_billiards.SetIsBegin(false);
 
 	// 更新数据库信息...
-	DbExecute::UpdateToBilliardsTable(_billiards);
+	DbExecute::UpdateToBilliardsTable(&_billiards);
 }

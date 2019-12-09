@@ -4,12 +4,14 @@
 #include <QDialog>
 #include "ui_GuiAddBilliardsTable.h"
 
+class Billiards;
+
 // 添加球桌
 class GuiAddBilliardsTable : public QDialog {
 	Q_OBJECT
 
 public:
-	GuiAddBilliardsTable(QWidget *parent = 0);
+	GuiAddBilliardsTable(Billiards* billiards = nullptr, QWidget *parent = 0);
 	~GuiAddBilliardsTable();
 
 private:
@@ -21,6 +23,8 @@ private:
 
 private:
 	Ui::GuiAddBilliardsTable ui;
+
+	Billiards* _billiards;
 };
 
 #endif // GUIADDBILLIARDSTABLE_H
