@@ -5,7 +5,8 @@
 #include "GuiBilliardsTable.h"
 #include "../Bill/GuiPay.h"
 #include "../Global/GlobalDefine.h"
-#include "DbModule/DbExecute.h"
+#include "../DbModule/DbExecute.h"
+#include "../Billiards/BilliardsManager.h"
 
 
 GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
@@ -37,9 +38,14 @@ void GuiBilliardsTable::SetBilliards(Billiards& billiards) {
 }
 
 void GuiBilliardsTable::UpdateUi() {
+	QString billiardsTypeId = _billiards.GetBilliardsTypeId();
+	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(billiardsTypeId);
+
 	ui.lineEditTableNum->setText(QString::number(_billiards.GetTableNum()));
-	ui.lineEditTableType->setText(_billiards.GetBilliardsType().GetTypeName());
-	ui.lineEditPerHour->setText(QString::number(_billiards.GetBilliardsType().GetPricePerHour()));
+	if (billiardsType) {
+		ui.lineEditTableType->setText(billiardsType->GetTypeName());
+		ui.lineEditPerHour->setText(QString::number(billiardsType->GetPricePerHour()));
+	}
 
 	if (_billiards.GetIsBegin()) {
 		ui.lineEditBeginTime->setText(_billiards.GetBeginTime());
@@ -56,10 +62,15 @@ void GuiBilliardsTable::UpdateUi() {
 }
 
 void GuiBilliardsTable::UpdateData(QDateTime currentDateTime) {
+	QString billiardsTypeId = _billiards.GetBilliardsTypeId();
+	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(billiardsTypeId);
+
 	int mSecond = currentDateTime.toMSecsSinceEpoch()
 		- QDateTime::fromString(_billiards.GetBeginTime(), gTimeFormat).toMSecsSinceEpoch();
 	_durationTime = QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss");
-	_money = mSecond * 0.001 / 3600.0 * _billiards.GetBilliardsType().GetPricePerHour();
+	if (billiardsType) {
+		_money = mSecond * 0.001 / 3600.0 * billiardsType->GetPricePerHour();
+	}
 }
 
 void GuiBilliardsTable::contextMenuEvent(QContextMenuEvent *event) {
@@ -82,7 +93,19 @@ void GuiBilliardsTable::SlotBegin() {
 	UpdateUi();
 
 	// 更新数据库信息...
-	DbExecute::UpdateToBilliardsTable(&_billiards);
+	BilliardsTableDef billiardsTableDef;
+	billiardsTableDef.uuid_ = _billiards.GetUuid();
+	billiardsTableDef.tableNum_ = QString::number(_billiards.GetTableNum());
+	billiardsTableDef.billiardsTypeId_ = _billiards.GetBilliardsTypeId();
+	billiardsTableDef.beginTime_ = _billiards.GetBeginTime();
+	billiardsTableDef.endTime_ = _billiards.GetEndTime();
+	if (_billiards.GetIsBegin()) {
+		billiardsTableDef.isBegin_ = "1";
+	}
+	else {
+		billiardsTableDef.isBegin_ = "0";
+	}
+	DbExecute::UpdateToBilliardsTable(billiardsTableDef);
 }
 
 void GuiBilliardsTable::SlotEnd() {
@@ -107,5 +130,17 @@ void GuiBilliardsTable::SlotEnd() {
 	_billiards.SetIsBegin(false);
 
 	// 更新数据库信息...
-	DbExecute::UpdateToBilliardsTable(&_billiards);
+	BilliardsTableDef billiardsTableDef;
+	billiardsTableDef.uuid_ = _billiards.GetUuid();
+	billiardsTableDef.tableNum_ = QString::number(_billiards.GetTableNum());
+	billiardsTableDef.billiardsTypeId_ = _billiards.GetBilliardsTypeId();
+	billiardsTableDef.beginTime_ = _billiards.GetBeginTime();
+	billiardsTableDef.endTime_ = _billiards.GetEndTime();
+	if (_billiards.GetIsBegin()) {
+		billiardsTableDef.isBegin_ = "1";
+	}
+	else {
+		billiardsTableDef.isBegin_ = "0";
+	}
+	DbExecute::UpdateToBilliardsTable(billiardsTableDef);
 }

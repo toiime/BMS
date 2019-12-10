@@ -24,12 +24,12 @@ QString Bill::GetTableNum() {
 	return _tableNum;
 }
 
-void Bill::SetTableType(QString tableType) {
-	_tableType = tableType;
+void Bill::SetTableTypeName(QString tableTypeName) {
+	_tableTypeName = tableTypeName;
 }
 
-QString Bill::GetTableType() {
-	return _tableType;
+QString Bill::GetTableTypeName() {
+	return _tableTypeName;
 }
 
 void Bill::SetPricePerHour(double pricePerHour) {

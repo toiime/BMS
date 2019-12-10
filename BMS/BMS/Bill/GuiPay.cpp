@@ -2,6 +2,7 @@
 #include "../Global/GlobalDefine.h"
 #include "../Bill/Bill.h"
 #include "../Bill/BillManager.h"
+#include "../Billiards/BilliardsManager.h"
 
 GuiPay::GuiPay(QWidget *parent)
 	: QDialog(parent) {
@@ -30,9 +31,14 @@ void GuiPay::SetBilliards(Billiards billiards) {
 }
 
 void GuiPay::UpdateUi() {
+	QString billiardsTypeId = _billiards.GetBilliardsTypeId();
+	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(billiardsTypeId);
+
 	ui.lineEditTableNum->setText(QString::number(_billiards.GetTableNum()));
-	ui.lineEditTableType->setText(_billiards.GetBilliardsType().GetTypeName());
-	ui.lineEditPricePerHour->setText(QString::number(_billiards.GetBilliardsType().GetPricePerHour()));
+	if (billiardsType) {
+		ui.lineEditTableType->setText(billiardsType->GetTypeName());
+		ui.lineEditPricePerHour->setText(QString::number(billiardsType->GetPricePerHour()));
+	}
 	ui.lineEditBeginTime->setText(_billiards.GetBeginTime());
 	ui.lineEditPayTime->setText(_billiards.GetEndTime());
 
@@ -41,24 +47,30 @@ void GuiPay::UpdateUi() {
 		- QDateTime::fromString(_billiards.GetBeginTime(), gTimeFormat).toMSecsSinceEpoch();
 
 	_durationTime = QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss");
-	_payMoney = mSecond * 0.001 / 3600.0 * _billiards.GetBilliardsType().GetPricePerHour();
+	if (billiardsType) {
+		_payMoney = mSecond * 0.001 / 3600.0 * billiardsType->GetPricePerHour();
+	}
 
 	ui.lineEditDurationTime->setText(_durationTime);
 	ui.lineEditPayMoney->setText(QString::number(_payMoney));
 }
 
 void GuiPay::SlotBtnOk() {
+	QString billiardsTypeId = _billiards.GetBilliardsTypeId();
+	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(billiardsTypeId);
 
 	// 创建账单...
-	Bill bill;
-	bill.SetTableNum(QString::number(_billiards.GetTableNum()));
-	bill.SetTableType(_billiards.GetBilliardsType().GetTypeName());
-	bill.SetPricePerHour(_billiards.GetBilliardsType().GetPricePerHour());
-	bill.SetBeginTime(_billiards.GetBeginTime());
-	bill.SetPayTime(_billiards.GetEndTime());
-	bill.SetDurationTime(_durationTime);
-	bill.SetPayMoney(_payMoney);
-	BillManager::GetInstance()->AddBill(bill);
+	Bill* bill = BillManager::GetInstance()->CreateBill();
+	bill->SetTableNum(QString::number(_billiards.GetTableNum()));
+	if (billiardsType) {
+		bill->SetTableTypeName(billiardsType->GetTypeName());
+		bill->SetPricePerHour(billiardsType->GetPricePerHour());
+	}
+	bill->SetBeginTime(_billiards.GetBeginTime());
+	bill->SetPayTime(_billiards.GetEndTime());
+	bill->SetDurationTime(_durationTime);
+	bill->SetPayMoney(_payMoney);
+	BillManager::GetInstance()->UpdateBill(bill);
 
 	accept();
 }

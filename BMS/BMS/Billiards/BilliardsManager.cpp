@@ -10,7 +10,16 @@ BilliardsManager* BilliardsManager::GetInstance() {
 }
 
 void BilliardsManager::LoadTableTypeFromDb() {
-	DbExecute::QueryFromTableType(_vecBilliardsType);
+	QVector<TableTypeDef> vecTableTypeDef;
+	DbExecute::QueryFromTableType(vecTableTypeDef);
+
+	for (auto& v : vecTableTypeDef) {
+		BilliardsType* billiardsType = new BilliardsType;
+		billiardsType->SetUuid(v.uuid_);
+		billiardsType->SetTypeName(v.typeName_);
+		billiardsType->SetPricePerHour(v.pricePerHour_);
+		_vecBilliardsType.push_back(billiardsType);
+	}
 }
 
 BilliardsType* BilliardsManager::CreateTableType() {
@@ -22,7 +31,12 @@ BilliardsType* BilliardsManager::CreateTableType() {
 	billiardsType->SetUuid(strId);
 
 	_vecBilliardsType.push_back(billiardsType);   // 内存
-	DbExecute::InsertToTableType(billiardsType);  // 数据库
+
+	TableTypeDef tableTypeDef;
+	tableTypeDef.uuid_ = billiardsType->GetUuid();
+	tableTypeDef.typeName_ = billiardsType->GetTypeName();
+	tableTypeDef.pricePerHour_ = billiardsType->GetPricePerHour();
+	DbExecute::InsertToTableType(tableTypeDef);  // 数据库
 
 	return billiardsType;
 }
@@ -36,7 +50,11 @@ void BilliardsManager::UpdateTableType(BilliardsType* billiardsType) {
 		}
 	}
 
-	DbExecute::UpdateToTableType(billiardsType);  // 数据库
+	TableTypeDef tableTypeDef;
+	tableTypeDef.uuid_ = billiardsType->GetUuid();
+	tableTypeDef.typeName_ = billiardsType->GetTypeName();
+	tableTypeDef.pricePerHour_ = billiardsType->GetPricePerHour();
+	DbExecute::UpdateToTableType(tableTypeDef);  // 数据库
 }
 
 void BilliardsManager::DeleteTableType(QString uuid) {
@@ -68,7 +86,24 @@ QVector<BilliardsType*> BilliardsManager::GetTableTypes() {
 }
 
 void BilliardsManager::LoadTableFromDb() {
-	DbExecute::QueryFromBilliardsTable(_vecBilliards);
+	QVector<BilliardsTableDef> vecBilliardsTableDef;
+	DbExecute::QueryFromBilliardsTable(vecBilliardsTableDef);
+
+	for (auto& v : vecBilliardsTableDef) {
+		Billiards* billiards = new Billiards;
+		billiards->SetUuid(v.uuid_);
+		billiards->SetTableNum(v.tableNum_.toInt());
+		billiards->SetBilliardsTypeId(v.billiardsTypeId_);
+		billiards->SetBeginTime(v.beginTime_);
+		billiards->SetEndTime(v.endTime_);
+		if (v.isBegin_ == "1") {
+			billiards->SetIsBegin(true);
+		}
+		else {
+			billiards->SetIsBegin(false);
+		}
+		_vecBilliards.push_back(billiards);
+	}
 }
 
 Billiards* BilliardsManager::CreateBilliardsTable() {
@@ -80,7 +115,20 @@ Billiards* BilliardsManager::CreateBilliardsTable() {
 	billiards->SetUuid(strId);
 
 	_vecBilliards.push_back(billiards);            // 内存
-	DbExecute::InsertToBilliardsTable(billiards);  // 数据库
+
+	BilliardsTableDef billiardsTableDef;
+	billiardsTableDef.uuid_ = billiards->GetUuid();
+	billiardsTableDef.tableNum_ = QString::number(billiards->GetTableNum());
+	billiardsTableDef.billiardsTypeId_ = billiards->GetBilliardsTypeId();
+	billiardsTableDef.beginTime_ = billiards->GetBeginTime();
+	billiardsTableDef.endTime_ = billiards->GetEndTime();
+	if (billiards->GetIsBegin()) {
+		billiardsTableDef.isBegin_ = "1";
+	}
+	else {
+		billiardsTableDef.isBegin_ = "0";
+	}
+	DbExecute::InsertToBilliardsTable(billiardsTableDef);  // 数据库
 
 	return billiards;
 }
@@ -94,7 +142,19 @@ void BilliardsManager::UpdateBilliardsTable(Billiards* billiards) {
 		}
 	}
 
-	DbExecute::UpdateToBilliardsTable(billiards);
+	BilliardsTableDef billiardsTableDef;
+	billiardsTableDef.uuid_ = billiards->GetUuid();
+	billiardsTableDef.tableNum_ = QString::number(billiards->GetTableNum());
+	billiardsTableDef.billiardsTypeId_ = billiards->GetBilliardsTypeId();
+	billiardsTableDef.beginTime_ = billiards->GetBeginTime();
+	billiardsTableDef.endTime_ = billiards->GetEndTime();
+	if (billiards->GetIsBegin()) {
+		billiardsTableDef.isBegin_ = "1";
+	}
+	else {
+		billiardsTableDef.isBegin_ = "0";
+	}
+	DbExecute::UpdateToBilliardsTable(billiardsTableDef);
 }
 
 void BilliardsManager::DeleteBilliardsTable(QString uuid) {

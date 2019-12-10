@@ -25,12 +25,12 @@ int Billiards::GetTableNum() {
 	return _tableNum;
 }
 
-void Billiards::SetBilliardsType(BilliardsType billiardsType) {
-	_billiardsType = billiardsType;
+void Billiards::SetBilliardsTypeId(QString billiardsTypeId) {
+	_billiardsTypeId = billiardsTypeId;
 }
 
-BilliardsType Billiards::GetBilliardsType() {
-	return _billiardsType;
+QString Billiards::GetBilliardsTypeId() {
+	return _billiardsTypeId;
 }
 
 void Billiards::SetBeginTime(QString beginTime) {

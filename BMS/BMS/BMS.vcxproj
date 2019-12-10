@@ -202,6 +202,7 @@
     <ClInclude Include="Bill\Bill.h" />
     <ClInclude Include="Bill\BillManager.h" />
     <ClInclude Include="DbModule\DbExecute.h" />
+    <ClInclude Include="DbModule\DbStructDef.h" />
     <ClInclude Include="GeneratedFiles\ui_bms.h" />
     <ClInclude Include="GeneratedFiles\ui_GuiAddBilliardsTable.h" />
     <ClInclude Include="GeneratedFiles\ui_GuiAddBilliardsType.h" />

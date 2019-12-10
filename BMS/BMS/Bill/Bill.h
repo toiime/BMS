@@ -15,8 +15,8 @@ public:
 	void SetTableNum(QString tableNum);
 	QString GetTableNum();
 
-	void SetTableType(QString tableType);
-	QString GetTableType();
+	void SetTableTypeName(QString tableTypeName);
+	QString GetTableTypeName();
 
 	void SetPricePerHour(double pricePerHour);
 	double GetPricePerHour();
@@ -36,7 +36,7 @@ public:
 private:
 	QString _uuid;                // ID
 	QString _tableNum;            // 球桌编号
-	QString _tableType;           // 球桌类型
+	QString _tableTypeName;       // 球桌类型名称
 	double _pricePerHour;         // 小时单价
 	QString _beginTime;           // 开局时间
 	QString _payTime;             // 结账时间

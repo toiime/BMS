@@ -17,8 +17,8 @@ public:
 	void SetTableNum(int tableNum);
 	int GetTableNum();
 
-	void SetBilliardsType(BilliardsType billiardsType);
-	BilliardsType GetBilliardsType();
+	void SetBilliardsTypeId(QString billiardsTypeId);
+	QString GetBilliardsTypeId();
 
 	void SetBeginTime(QString beginTime);
 	QString GetBeginTime();
@@ -32,7 +32,7 @@ public:
 private:
 	QString _uuid;                    // 球桌ID
 	int _tableNum;                    // 桌号
-	BilliardsType _billiardsType;     // 球桌类型
+	QString _billiardsTypeId;         // 球桌类型 ID
 	QString _beginTime;               // 开始时间
 	QString _endTime;                 // 结束时间
 	bool _isBegin;                    // 是否开局

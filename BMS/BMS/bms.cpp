@@ -126,7 +126,11 @@ void BMS::UpdateBilliardsTable() {
 		int rowCount = ui.tableWidgetTables->rowCount();
 		ui.tableWidgetTables->insertRow(rowCount);
 		ui.tableWidgetTables->setItem(rowCount, 0, new QTableWidgetItem(QString::number(v->GetTableNum())));
-		ui.tableWidgetTables->setItem(rowCount, 1, new QTableWidgetItem(v->GetBilliardsType().GetTypeName()));
+		QString billiardsTypeId = v->GetBilliardsTypeId();
+		BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(billiardsTypeId);
+		if (billiardsType) {
+			ui.tableWidgetTables->setItem(rowCount, 1, new QTableWidgetItem(billiardsType->GetTypeName()));
+		}
 		ui.tableWidgetTables->item(rowCount, 0)->setData(Qt::UserRole, v->GetUuid());
 	}
 }
@@ -163,20 +167,20 @@ void BMS::InitTabWidgetBill() {
 void BMS::UpdateBill() {
 	ui.tableWidgetBill->setRowCount(0);
 
-	QVector<Bill> vecBill = BillManager::GetInstance()->GetBills();
+	QVector<Bill*> vecBill = BillManager::GetInstance()->GetBills();
 
 	for (auto& v : vecBill) {
 		int index = 0;
 		int rowCount = ui.tableWidgetBill->rowCount();
 		ui.tableWidgetBill->insertRow(rowCount);
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetTableNum()));
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetTableType()));
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v.GetPricePerHour())));
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetBeginTime()));
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetPayTime()));
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v.GetDurationTime()));
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v.GetPayMoney())));
-		ui.tableWidgetBill->item(rowCount, 0)->setData(Qt::UserRole, v.GetUuid());
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetTableNum()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetTableTypeName()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v->GetPricePerHour())));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetBeginTime()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetPayTime()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetDurationTime()));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v->GetPayMoney())));
+		ui.tableWidgetBill->item(rowCount, 0)->setData(Qt::UserRole, v->GetUuid());
 	}
 }
 
@@ -249,12 +253,12 @@ void BMS::SlotEditBilliardsType() {
 	ui.tableWidgetTableType->setCurrentItem(nullptr);
 
 	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(uuid);
-	if (!billiardsType) return;
 
-	GuiAddBilliardsType addTypeDlg(billiardsType);
-
-	if (addTypeDlg.exec() == QDialog::Accepted) {
-		UpdateTableType();
+	if (billiardsType) {
+		GuiAddBilliardsType addTypeDlg(billiardsType);
+		if (addTypeDlg.exec() == QDialog::Accepted) {
+			UpdateTableType();
+		}
 	}
 }
 

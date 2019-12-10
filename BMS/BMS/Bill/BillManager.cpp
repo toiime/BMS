@@ -18,21 +18,68 @@ BillManager::~BillManager() {
 }
 
 void BillManager::LoadBillsFromDb() {
-	DbExecute::QueryFromBill(_vecBill);
+	QVector<BillDef> vecBillDef;
+	DbExecute::QueryFromBill(vecBillDef);
+
+	for (auto& v : vecBillDef) {
+		Bill* bill = new Bill;
+		bill->SetUuid(v.uuid_);
+		bill->SetTableNum(v.tableNum_);
+		bill->SetTableTypeName(v.tableTypeName_);
+		bill->SetPricePerHour(v.pricePerHour_);
+		bill->SetBeginTime(v.beginTime_);
+		bill->SetPayTime(v.payTime_);
+		bill->SetDurationTime(v.durationTime_);
+		bill->SetPayMoney(v.payMoney_);
+		_vecBill.push_back(bill);
+	}
 }
 
-void BillManager::AddBill(Bill bill) {
+Bill* BillManager::CreateBill() {
+	Bill* bill = new Bill;
 
 	QUuid id = QUuid::createUuid();
 	QString strId = id.toString();
 
-	bill.SetUuid(strId);
+	bill->SetUuid(strId);
 
-	_vecBill.push_back(bill); // 内存
+	_vecBill.push_back(bill);
 
-	DbExecute::InsertToBill(bill); // 数据库...
+	BillDef billDef;
+	billDef.uuid_ = bill->GetUuid();
+	billDef.tableNum_ = bill->GetTableNum();
+	billDef.tableTypeName_ = bill->GetTableTypeName();
+	billDef.pricePerHour_ = bill->GetPricePerHour();
+	billDef.beginTime_ = bill->GetBeginTime();
+	billDef.payTime_ = bill->GetPayTime();
+	billDef.durationTime_ = bill->GetDurationTime();
+	billDef.payMoney_ = bill->GetPayMoney();
+	DbExecute::InsertToBill(billDef);
+
+	return bill;
 }
 
-QVector<Bill> BillManager::GetBills() {
+void BillManager::UpdateBill(Bill* bill) {
+	if (!bill) return;
+
+	for (auto& v : _vecBill) {
+		if (v->GetUuid() == bill->GetUuid()) {
+			*v = *bill;
+		}
+	}
+
+	BillDef billDef;
+	billDef.uuid_ = bill->GetUuid();
+	billDef.tableNum_ = bill->GetTableNum();
+	billDef.tableTypeName_ = bill->GetTableTypeName();
+	billDef.pricePerHour_ = bill->GetPricePerHour();
+	billDef.beginTime_ = bill->GetBeginTime();
+	billDef.payTime_ = bill->GetPayTime();
+	billDef.durationTime_ = bill->GetDurationTime();
+	billDef.payMoney_ = bill->GetPayMoney();
+	DbExecute::UpdateToBill(billDef);
+}
+
+QVector<Bill*> BillManager::GetBills() {
 	return _vecBill;
 }

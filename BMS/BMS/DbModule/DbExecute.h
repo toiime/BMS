@@ -1,9 +1,7 @@
 ﻿#ifndef DB_EXECUTE_H_
 #define DB_EXECUTE_H_
 
-#include "./Billiards/BilliardsType.h"
-#include "./Billiards/Billiards.h"
-#include "./Bill/Bill.h"
+#include "./DbModule/DbStructDef.h"
 
 // 数据库操作类...
 class DbExecute {
@@ -15,20 +13,21 @@ public:
 	static int InitDb();
 
 	// 表 tableType
-	static int InsertToTableType(BilliardsType*& billiardsType);
+	static int InsertToTableType(const TableTypeDef& tableTypeDef);
 	static int DeleteFromTableType(QString sqlWhere);
-	static int UpdateToTableType(BilliardsType* billiardsType);
-	static int QueryFromTableType(QVector<BilliardsType*>& vecBilliardsType);
+	static int UpdateToTableType(const TableTypeDef& tableTypeDef);
+	static int QueryFromTableType(QVector<TableTypeDef>& vecTableTypeDef);
 
 	// 表 billiardsTable
-	static int InsertToBilliardsTable(Billiards* billiards);
+	static int InsertToBilliardsTable(const BilliardsTableDef& billiardsTableDef);
 	static int DeleteFromBilliardsTable(QString sqlWhere);
-	static int UpdateToBilliardsTable(Billiards* billiards);
-	static int QueryFromBilliardsTable(QVector<Billiards*>& vecBilliards);
+	static int UpdateToBilliardsTable(const BilliardsTableDef& billiardsTableDef);
+	static int QueryFromBilliardsTable(QVector<BilliardsTableDef>& vecBilliardsTableDef);
 
 	// 表 bill
-	static int InsertToBill(Bill& bill);
-	static int QueryFromBill(QVector<Bill>& vecBill);
+	static int InsertToBill(const BillDef& billDef);
+	static int UpdateToBill(const BillDef& billDef);
+	static int QueryFromBill(QVector<BillDef>& vecBillDef);
 
 private:
 	// 创建表 tableType

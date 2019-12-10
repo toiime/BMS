@@ -26,29 +26,29 @@ void GuiAddBilliardsTable::InitUi() {
 
 	if (_billiards) {
 		ui.lineEditTableNum->setText(QString::number(_billiards->GetTableNum()));
-		ui.comboBoxTableType->setCurrentText(_billiards->GetBilliardsType().GetTypeName());
+
+		QString billiardsTypeId = _billiards->GetBilliardsTypeId();
+		BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(billiardsTypeId);
+		if (billiardsType) {
+			ui.comboBoxTableType->setCurrentText(billiardsType->GetTypeName());
+		}
 	}
 }
 
 void GuiAddBilliardsTable::SlotBtnOk() {
 	int tableNum = ui.lineEditTableNum->text().toInt();
 	QString tableTypeId = ui.comboBoxTableType->currentData().toString();
-	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(tableTypeId);
 
 	if (_billiards) {
 		_billiards->SetTableNum(tableNum);
-		if (billiardsType) {
-			_billiards->SetBilliardsType(*billiardsType);
-		}
+		_billiards->SetBilliardsTypeId(tableTypeId);
 		BilliardsManager::GetInstance()->UpdateBilliardsTable(_billiards);
 	}
 	else {
 		Billiards* billiards = BilliardsManager::GetInstance()->CreateBilliardsTable();
 		if (billiards) {
 			billiards->SetTableNum(tableNum);
-			if (billiardsType) {
-				billiards->SetBilliardsType(*billiardsType);
-			}
+			billiards->SetBilliardsTypeId(tableTypeId);
 			BilliardsManager::GetInstance()->UpdateBilliardsTable(billiards);
 		}
 	}

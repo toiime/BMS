@@ -195,6 +195,9 @@
     <ClInclude Include="Bill\BillManager.h">
       <Filter>Bill</Filter>
     </ClInclude>
+    <ClInclude Include="DbModule\DbStructDef.h">
+      <Filter>DbModule</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="BMS.rc" />
