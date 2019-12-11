@@ -59,6 +59,18 @@
      </property>
      <widget class="QWidget" name="pageBusiness">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QGroupBox" name="groupBox_2">
          <property name="title">
@@ -75,8 +87,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>999</width>
-               <height>530</height>
+               <width>1021</width>
+               <height>541</height>
               </rect>
              </property>
             </widget>
@@ -89,6 +101,18 @@
      </widget>
      <widget class="QWidget" name="pageBill">
       <layout class="QHBoxLayout" name="horizontalLayout_8">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QGroupBox" name="groupBox_3">
          <property name="title">
@@ -105,6 +129,18 @@
      </widget>
      <widget class="QWidget" name="pageSettings">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
         <widget class="QGroupBox" name="groupBox">
          <property name="title">
