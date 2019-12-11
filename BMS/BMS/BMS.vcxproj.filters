@@ -45,6 +45,9 @@
     <Filter Include="Bill">
       <UniqueIdentifier>{bd74591d-8a63-40a6-a0c7-14d04f3e3a5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Speech">
+      <UniqueIdentifier>{5e2eda6f-ff55-45f2-89ac-abebf88b5776}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -118,6 +121,9 @@
     </ClCompile>
     <ClCompile Include="GeneratedFiles\qrc_qss.cpp">
       <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Speech\Speech.cpp">
+      <Filter>Speech</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,6 +203,9 @@
     </ClInclude>
     <ClInclude Include="DbModule\DbStructDef.h">
       <Filter>DbModule</Filter>
+    </ClInclude>
+    <ClInclude Include="Speech\Speech.h">
+      <Filter>Speech</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

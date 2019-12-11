@@ -5,6 +5,8 @@
 
 #include <../Bill/Bill.h>
 
+class Speech;
+
 // 账单管理器类...
 class BillManager {
 private:
@@ -25,6 +27,8 @@ public:
 
 private:
 	QVector<Bill*> _vecBill;
+
+	Speech* _speech;
 };
 
 #endif // !BILL_MANAGER_H_

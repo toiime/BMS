@@ -2,6 +2,7 @@
 
 #include "../Bill/BillManager.h"
 #include "../DbModule/DbExecute.h"
+#include "../Speech/Speech.h"
 
 // 在此处初始化
 BillManager* BillManager::_instance = new BillManager();
@@ -10,11 +11,14 @@ BillManager* BillManager::GetInstance() {
 }
 
 BillManager::BillManager() {
-
+	_speech = nullptr;
 }
 
 BillManager::~BillManager() {
-
+	if (_speech) {
+		delete _speech;
+		_speech = nullptr;
+	}
 }
 
 void BillManager::LoadBillsFromDb() {
@@ -78,6 +82,15 @@ void BillManager::UpdateBill(Bill* bill) {
 	billDef.durationTime_ = bill->GetDurationTime();
 	billDef.payMoney_ = bill->GetPayMoney();
 	DbExecute::UpdateToBill(billDef);
+
+	// 语音播报...
+	QString content;
+	content = QStringLiteral("时长%1,消费金额%2元,欢迎下次光临!!!")
+		.arg(bill->GetDurationTime())
+		.arg(bill->GetPayMoney());
+
+	if (!_speech) _speech = new Speech;
+	_speech->Say(content);
 }
 
 QVector<Bill*> BillManager::GetBills() {
