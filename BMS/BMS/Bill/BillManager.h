@@ -26,6 +26,9 @@ public:
 	QVector<Bill*> GetBills();           // 返回账单...
 
 private:
+	void SayBill(Bill* bill);
+
+private:
 	QVector<Bill*> _vecBill;
 
 	Speech* _speech;

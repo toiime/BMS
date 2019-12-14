@@ -9,7 +9,7 @@ const QString gDbName = "./DbModule/BMS.db";       // 数据库名称
 
 const QString gTimeFormat = "yyyy-MM-dd hh:mm:ss"; // 时间格式化
 
-
+const QString gConfigPath = "./Config/Conifg.json";// 配置文件路径...
 
 
 // some word ...

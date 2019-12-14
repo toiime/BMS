@@ -14,3 +14,7 @@ Speech::~Speech() {
 void Speech::Say(const QString& content) {
 	_speech->say(content);
 }
+
+void Speech::SetVolume(const double& volume) {
+	_speech->setVolume(volume);
+}

@@ -27,7 +27,9 @@ private:
 	void InitTabWidgetBill();         // 初始化历史账单列表
 	void UpdateBill();                // 更新历史账单列表
 
-	void InitBusinessPage();
+	void InitBusinessPage();          // 初始化球桌界面...
+
+	void InitConfigUi();              // 初始化配制界面...
 
 private:
 	void SlotBtnBusiness();         // 营业
@@ -41,6 +43,8 @@ private:
 	void SlotAddBilliards();        // 添加球桌
 	void SlotDeleteBilliardsTable();// 删除球桌
 	void SlotEditBilliards();       // 编辑球桌...
+
+	void SlotConfigApply();         // 配制文件应用...
 
 	void SlotTimeOut();             // 定时器
 

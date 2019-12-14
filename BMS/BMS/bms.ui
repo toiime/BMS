@@ -55,7 +55,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidgetMainWindow">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="pageBusiness">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -87,8 +87,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>1021</width>
-               <height>541</height>
+               <width>98</width>
+               <height>28</height>
               </rect>
              </property>
             </widget>
@@ -150,7 +150,7 @@
           <item>
            <widget class="QTabWidget" name="tabWidget">
             <property name="currentIndex">
-             <number>0</number>
+             <number>2</number>
             </property>
             <widget class="QWidget" name="tabTableType">
              <attribute name="title">
@@ -329,14 +329,14 @@
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout_10">
                 <item>
-                 <widget class="QRadioButton" name="radioButton">
+                 <widget class="QRadioButton" name="radioButtonSpeechOn">
                   <property name="text">
                    <string>开启</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QRadioButton" name="radioButton_2">
+                 <widget class="QRadioButton" name="radioButtonSpeechOff">
                   <property name="text">
                    <string>关闭</string>
                   </property>
@@ -373,7 +373,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QSlider" name="horizontalSlider">
+                 <widget class="QSlider" name="horizontalSliderSpeechVolume">
                   <property name="sizePolicy">
                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                     <horstretch>0</horstretch>
@@ -397,7 +397,7 @@
                  </widget>
                 </item>
                 <item>
-                 <widget class="QLineEdit" name="lineEdit"/>
+                 <widget class="QLineEdit" name="lineEditSpeechContent"/>
                 </item>
                </layout>
               </item>
@@ -419,7 +419,7 @@
                    </sizepolicy>
                   </property>
                   <property name="text">
-                   <string>[时间]为时间</string>
+                   <string>[num]为球桌编号,[time]为开局时长,[money]为消费金额.</string>
                   </property>
                  </widget>
                 </item>
@@ -437,6 +437,30 @@
                  </size>
                 </property>
                </spacer>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_15">
+                <item>
+                 <spacer name="horizontalSpacer_5">
+                  <property name="orientation">
+                   <enum>Qt::Horizontal</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>40</width>
+                    <height>20</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="pushButtonApply">
+                  <property name="text">
+                   <string>应用</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </widget>

@@ -11,6 +11,7 @@
 #include "./Billiards/BilliardsManager.h"
 #include "./Billiards/GuiBilliardsTable.h"
 #include "./Bill/BillManager.h"
+#include "./Config/Config.h"
 
 BMS::BMS(QWidget *parent)
 	: QWidget(parent) {
@@ -26,7 +27,7 @@ BMS::BMS(QWidget *parent)
 	InitTabWidgetTable();
 	InitBusinessPage();
 	InitTabWidgetBill();
-
+	InitConfigUi();
 
 	connect(ui.pushButtonBusiness, &QPushButton::clicked, this, &BMS::SlotBtnBusiness);
 	connect(ui.pushButtonSettings, &QPushButton::clicked, this, &BMS::SlotBtnSettings);
@@ -37,6 +38,11 @@ BMS::BMS(QWidget *parent)
 	connect(ui.pushButtonDeleteTable, &QPushButton::clicked, this, &BMS::SlotDeleteBilliardsTable);
 	connect(ui.pushButtonEditBallType, &QPushButton::clicked, this, &BMS::SlotEditBilliardsType);
 	connect(ui.pushButtonEditBall, &QPushButton::clicked, this, &BMS::SlotEditBilliards);
+	connect(ui.pushButtonApply, &QPushButton::clicked, this, &BMS::SlotConfigApply);
+
+	// 显示顺序...
+	ui.tabWidget->setCurrentWidget(ui.tabTableType);
+	ui.stackedWidgetMainWindow->setCurrentWidget(ui.pageBusiness);
 
 	// InitStyle();
 }
@@ -201,6 +207,23 @@ void BMS::InitBusinessPage() {
 	ui.scrollArea->widget()->setLayout(qGridLayout);
 }
 
+void BMS::InitConfigUi() {
+	Config::ConfigSpeech configSpeech = Config::GetInstance()->GetConfigSpeech();
+
+	if (configSpeech.powerState_ == 1) {
+		ui.radioButtonSpeechOn->setChecked(true);
+		ui.radioButtonSpeechOff->setChecked(false);
+	}
+	else if (configSpeech.powerState_ == 0) {
+		ui.radioButtonSpeechOn->setChecked(false);
+		ui.radioButtonSpeechOff->setChecked(true);
+	}
+
+	ui.horizontalSliderSpeechVolume->setValue(configSpeech.volume_);
+
+	ui.lineEditSpeechContent->setText(configSpeech.content_);
+}
+
 void BMS::SlotBtnBusiness() {
 	ui.stackedWidgetMainWindow->setCurrentWidget(ui.pageBusiness);
 }
@@ -307,6 +330,24 @@ void BMS::SlotEditBilliards() {
 	if (addTableDlg.exec() == QDialog::Accepted) {
 		UpdateBilliardsTable();
 	}
+}
+
+void BMS::SlotConfigApply() {
+	// speech ...
+	int speechPowerState = 0;
+	if (ui.radioButtonSpeechOn->isChecked()) speechPowerState = 1;
+	int speechVolume = ui.horizontalSliderSpeechVolume->value();
+	QString speechContent = ui.lineEditSpeechContent->text();
+
+	Config::ConfigSpeech configSpeech;
+	configSpeech.powerState_ = speechPowerState;
+	configSpeech.volume_ = speechVolume;
+	configSpeech.content_ = speechContent;
+
+	Config::GetInstance()->SetConfigSpeech(configSpeech);
+	Config::GetInstance()->SaveConfigFile();
+
+	QMessageBox::information(nullptr, QString("Note"), QString("Success!!!"));
 }
 
 void BMS::SlotTimeOut() {

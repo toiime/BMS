@@ -12,6 +12,7 @@ public:
 
 public:
 	void Say(const QString& content);
+	void SetVolume(const double& volume);
 
 private:
 	QTextToSpeech* _speech;

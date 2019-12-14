@@ -86,6 +86,7 @@
     <ClCompile Include="Bill\BillManager.cpp" />
     <ClCompile Include="Bill\GuiPay.cpp" />
     <ClCompile Include="bms.cpp" />
+    <ClCompile Include="Config\Config.cpp" />
     <ClCompile Include="DbModule\DbExecute.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_bms.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -160,6 +161,7 @@
     <ClInclude Include="Billiards\Billiards.h" />
     <ClInclude Include="Billiards\BilliardsManager.h" />
     <ClInclude Include="Billiards\BilliardsType.h" />
+    <ClInclude Include="Config\Config.h" />
     <ClInclude Include="Speech\Speech.h" />
     <CustomBuild Include="Billiards\GuiAddBilliardsTable.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
