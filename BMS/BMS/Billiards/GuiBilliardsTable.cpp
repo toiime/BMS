@@ -50,7 +50,7 @@ void GuiBilliardsTable::UpdateUi() {
 	if (_billiards.GetIsBegin()) {
 		ui.lineEditBeginTime->setText(_billiards.GetBeginTime());
 		ui.lineEditDurationTime->setText(_durationTime);
-		ui.lineEditMoney->setText(QString::number(_money));
+		ui.lineEditMoney->setText(QString::number(_money, 'f', 1));
 		ui.labelPic->setPixmap(_qPixmapPlaying);
 	}
 	else {

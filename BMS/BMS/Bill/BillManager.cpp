@@ -101,7 +101,7 @@ void BillManager::SayBill(Bill* bill) {
 	content = configSpeech.content_;
 	content.replace("[num]", bill->GetTableNum());
 	content.replace("[time]", bill->GetDurationTime());
-	content.replace("[money]", QString::number(bill->GetPayMoney()));
+	content.replace("[money]", QString::number(bill->GetPayMoney(), 'f', 1));
 
 	if (!_speech) _speech = new Speech;
 	_speech->SetVolume(configSpeech.volume_ / 100.0);

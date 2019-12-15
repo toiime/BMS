@@ -185,8 +185,11 @@ void BMS::UpdateBill() {
 		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetBeginTime()));
 		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetPayTime()));
 		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(v->GetDurationTime()));
-		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v->GetPayMoney())));
+		ui.tableWidgetBill->setItem(rowCount, index++, new QTableWidgetItem(QString::number(v->GetPayMoney(), 'f', 1)));
 		ui.tableWidgetBill->item(rowCount, 0)->setData(Qt::UserRole, v->GetUuid());
+
+		// 设置对齐方式...
+		ui.tableWidgetBill->item(rowCount, 6)->setTextAlignment(Qt::AlignRight);
 	}
 }
 

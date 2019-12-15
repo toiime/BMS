@@ -52,7 +52,7 @@ void GuiPay::UpdateUi() {
 	}
 
 	ui.lineEditDurationTime->setText(_durationTime);
-	ui.lineEditPayMoney->setText(QString::number(_payMoney));
+	ui.lineEditPayMoney->setText(QString::number(_payMoney, 'f', 1));
 }
 
 void GuiPay::SlotBtnOk() {
