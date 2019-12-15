@@ -36,7 +36,7 @@ void BillManager::LoadBillsFromDb() {
 		bill->SetPayTime(v.payTime_);
 		bill->SetDurationTime(v.durationTime_);
 		bill->SetPayMoney(v.payMoney_);
-		_vecBill.push_back(bill);
+		_vecBill.push_front(bill);
 	}
 }
 
@@ -48,7 +48,7 @@ Bill* BillManager::CreateBill() {
 
 	bill->SetUuid(strId);
 
-	_vecBill.push_back(bill);
+	_vecBill.push_front(bill);
 
 	BillDef billDef;
 	billDef.uuid_ = bill->GetUuid();
