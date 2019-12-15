@@ -100,7 +100,14 @@ void BillManager::SayBill(Bill* bill) {
 	QString content;
 	content = configSpeech.content_;
 	content.replace("[num]", bill->GetTableNum());
-	content.replace("[time]", bill->GetDurationTime());
+
+	QString durationTime = bill->GetDurationTime(); // 00:00:00
+	QStringList timeList = durationTime.split(":");
+	QString time = QStringLiteral("%1小时%2分钟")
+		.arg(timeList.at(0).toInt())
+		.arg(timeList.at(1).toInt());
+
+	content.replace("[time]", time);
 	content.replace("[money]", QString::number(bill->GetPayMoney(), 'f', 1));
 
 	if (!_speech) _speech = new Speech;

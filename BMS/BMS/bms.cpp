@@ -189,7 +189,7 @@ void BMS::UpdateBill() {
 		ui.tableWidgetBill->item(rowCount, 0)->setData(Qt::UserRole, v->GetUuid());
 
 		// 设置对齐方式...
-		ui.tableWidgetBill->item(rowCount, 6)->setTextAlignment(Qt::AlignRight);
+		ui.tableWidgetBill->item(rowCount, 6)->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
 	}
 }
 
