@@ -8,6 +8,8 @@ GuiPay::GuiPay(QWidget *parent)
 	: QDialog(parent) {
 	ui.setupUi(this);
 
+	this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
+
 	_payMoney = 0.0;
 
 	ui.lineEditTableNum->setEnabled(false);

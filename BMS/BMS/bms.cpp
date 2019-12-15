@@ -1,5 +1,4 @@
 ﻿#include <QDebug>
-#include <QMessageBox>
 #include <QTimer>
 #include <QFile>
 
@@ -12,6 +11,7 @@
 #include "./Billiards/GuiBilliardsTable.h"
 #include "./Bill/BillManager.h"
 #include "./Config/Config.h"
+#include "./CustomWidget/MsgHelper.h"
 
 BMS::BMS(QWidget *parent)
 	: QWidget(parent) {
@@ -251,13 +251,12 @@ void BMS::SlotAddBilliardsType() {
 void BMS::SlotDeleteBilliardsType() {
 	int rowIndex = ui.tableWidgetTableType->currentRow();
 	if (rowIndex < 0) {
-		QMessageBox::information(this, "Note", "No Data Selected");
+		MsgHelper::MsgInformation(this, "Note", "No Data Selected");
 		return;
 	}
 
-	int rv = QMessageBox::question(this, QString("Note"), QStringLiteral("确定要删除吗?")
-		, QStringLiteral("确定"), QStringLiteral("取消"));
-	if (rv != 0) {
+	int rv = MsgHelper::MsgQuestion(this, QString("Note"), QStringLiteral("确定要删除吗?"));
+	if (rv != QDialog::Accepted) {
 		return;
 	}
 
@@ -271,7 +270,7 @@ void BMS::SlotDeleteBilliardsType() {
 void BMS::SlotEditBilliardsType() {
 	int rowIndex = ui.tableWidgetTableType->currentRow();
 	if (rowIndex < 0) {
-		QMessageBox::information(this, "Note", "No Data Selected");
+		MsgHelper::MsgInformation(this, "Note", "No Data Selected");
 		return;
 	}
 
@@ -299,13 +298,12 @@ void BMS::SlotAddBilliards() {
 void BMS::SlotDeleteBilliardsTable() {
 	int rowIndex = ui.tableWidgetTables->currentRow();
 	if (rowIndex < 0) {
-		QMessageBox::information(this, "Note", "No Data Selected");
+		MsgHelper::MsgInformation(this, "Note", "No Data Selected");
 		return;
 	}
 
-	int rv = QMessageBox::question(this, QString("Note"), QStringLiteral("确定要删除吗?")
-		, QStringLiteral("确定"), QStringLiteral("取消"));
-	if (rv != 0) {
+	int rv = MsgHelper::MsgQuestion(this, QString("Note"), QStringLiteral("确定要删除吗?"));
+	if (rv != QDialog::Accepted) {
 		return;
 	}
 
@@ -319,7 +317,7 @@ void BMS::SlotDeleteBilliardsTable() {
 void BMS::SlotEditBilliards() {
 	int rowIndex = ui.tableWidgetTables->currentRow();
 	if (rowIndex < 0) {
-		QMessageBox::information(this, "Note", "No Data Selected");
+		MsgHelper::MsgInformation(this, "Note", "No Data Selected");
 		return;
 	}
 
@@ -350,7 +348,7 @@ void BMS::SlotConfigApply() {
 	Config::GetInstance()->SetConfigSpeech(configSpeech);
 	Config::GetInstance()->SaveConfigFile();
 
-	QMessageBox::information(nullptr, QString("Note"), QString("Success!!!"));
+	MsgHelper::MsgInformation(nullptr, QString("Note"), QString("Success!!!"));
 }
 
 void BMS::SlotTimeOut() {

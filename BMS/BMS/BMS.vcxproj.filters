@@ -51,6 +51,9 @@
     <Filter Include="Config">
       <UniqueIdentifier>{6861b1e3-12da-42aa-a63a-189bdf65d1fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="CustomWidget">
+      <UniqueIdentifier>{301aed46-84e2-4fd5-9e5d-56e625754579}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -131,6 +134,27 @@
     <ClCompile Include="Config\Config.cpp">
       <Filter>Config</Filter>
     </ClCompile>
+    <ClCompile Include="CustomWidget\MsgHelper.cpp">
+      <Filter>CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MessageInformation.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MessageInformation.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomWidget\MessageInformation.cpp">
+      <Filter>CustomWidget</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_MessageQuestion.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_MessageQuestion.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomWidget\MessageQuestion.cpp">
+      <Filter>CustomWidget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="bms.h">
@@ -168,6 +192,18 @@
     </CustomBuild>
     <CustomBuild Include="qss.qrc">
       <Filter>Resource Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CustomWidget\MessageInformation.ui">
+      <Filter>CustomWidget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CustomWidget\MessageInformation.h">
+      <Filter>CustomWidget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CustomWidget\MessageQuestion.ui">
+      <Filter>CustomWidget</Filter>
+    </CustomBuild>
+    <CustomBuild Include="CustomWidget\MessageQuestion.h">
+      <Filter>CustomWidget</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +251,15 @@
     </ClInclude>
     <ClInclude Include="Config\Config.h">
       <Filter>Config</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomWidget\MsgHelper.h">
+      <Filter>CustomWidget</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MessageInformation.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_MessageQuestion.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

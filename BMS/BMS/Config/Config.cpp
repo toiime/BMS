@@ -1,11 +1,11 @@
 #include "Config/Config.h"
 
 #include <QFile>
-#include <QMessageBox>
 #include <QJsonObject>
 #include <QJsonDocument>
 
 #include "Global/GlobalDefine.h"
+#include "../CustomWidget/MsgHelper.h"
 
 Config* Config::_instance = new Config;
 Config* Config::GetInstance() {
@@ -24,7 +24,7 @@ Config::~Config() {
 void Config::LoadConfigFile() {
 	QFile file(gConfigPath);
 	if (!file.open(QIODevice::ReadOnly)) {
-		QMessageBox::information(nullptr, QString("Note"), QString("%1 open error!").arg(gConfigPath));
+		MsgHelper::MsgInformation(nullptr, QString("Note"), QString("%1 open error!").arg(gConfigPath));
 		return;
 	}
 
@@ -35,7 +35,7 @@ void Config::LoadConfigFile() {
 	QJsonDocument jsonDoc(QJsonDocument::fromJson(allData, &jsonError));
 
 	if (jsonError.error != QJsonParseError::NoError) {
-		QMessageBox::information(nullptr, QString("Note"), QString("%1 error!").arg(gConfigPath));
+		MsgHelper::MsgInformation(nullptr, QString("Note"), QString("%1 error!").arg(gConfigPath));
 		return;
 	}
 
@@ -55,7 +55,7 @@ void Config::LoadConfigFile() {
 void Config::SaveConfigFile() {
 	QFile file(gConfigPath);
 	if (!file.open(QIODevice::ReadWrite | QIODevice::Truncate)) {
-		QMessageBox::information(nullptr, QString("Note"), QString("%1 open error!").arg(gConfigPath));
+		MsgHelper::MsgInformation(nullptr, QString("Note"), QString("%1 open error!").arg(gConfigPath));
 		return;
 	}
 

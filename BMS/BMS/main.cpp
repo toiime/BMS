@@ -1,10 +1,10 @@
 ﻿#include "bms.h"
 #include <QtWidgets/QApplication>
-#include <QMessageBox>
 #include <QDir>
 
 #include "./DbModule/DbExecute.h"
 #include "./Config/Config.h"
+#include "./CustomWidget/MsgHelper.h"
 
 int main(int argc, char *argv[]) {
 	// 1.设置库路径...
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 	// 3.初始化数据库...
 	int rv = DbExecute::InitDb();
 	if (rv != 0) {
-		QMessageBox::information(nullptr, QStringLiteral("Note"), QStringLiteral("DB Init Error !"));
+		MsgHelper::MsgInformation(nullptr, QStringLiteral("Note"), QStringLiteral("DB Init Error !"));
 		return 0;
 	}
 

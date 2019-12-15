@@ -5,6 +5,8 @@ GuiAddBilliardsType::GuiAddBilliardsType(BilliardsType* billiardsType, QWidget *
 	: _billiardsType(billiardsType), QDialog(parent) {
 	ui.setupUi(this);
 
+	this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
+
 	InitUi();
 
 	connect(ui.pushButtonOk, &QPushButton::clicked, this, &GuiAddBilliardsType::SlotBtnOk);

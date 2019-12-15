@@ -1,12 +1,12 @@
 ﻿#include <QMenu>
 #include <QDebug>
-#include <QMessageBox>
 
 #include "GuiBilliardsTable.h"
 #include "../Bill/GuiPay.h"
 #include "../Global/GlobalDefine.h"
 #include "../DbModule/DbExecute.h"
 #include "../Billiards/BilliardsManager.h"
+#include "../CustomWidget/MsgHelper.h"
 
 
 GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
@@ -83,7 +83,7 @@ void GuiBilliardsTable::contextMenuEvent(QContextMenuEvent *event) {
 
 void GuiBilliardsTable::SlotBegin() {
 	if (_billiards.GetIsBegin()) {
-		QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("本桌已经开局!"));
+		MsgHelper::MsgInformation(this, QStringLiteral("提示"), QStringLiteral("本桌已经开局!"));
 		return;
 	}
 
@@ -111,7 +111,7 @@ void GuiBilliardsTable::SlotBegin() {
 void GuiBilliardsTable::SlotEnd() {
 
 	if (!_billiards.GetIsBegin()) {
-		QMessageBox::information(this, QStringLiteral("提示"), QStringLiteral("本桌未开局!"));
+		MsgHelper::MsgInformation(this, QStringLiteral("提示"), QStringLiteral("本桌未开局!"));
 		return;
 	}
 
