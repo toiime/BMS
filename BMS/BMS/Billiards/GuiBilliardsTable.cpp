@@ -65,7 +65,7 @@ void GuiBilliardsTable::UpdateData(QDateTime currentDateTime) {
 	QString billiardsTypeId = _billiards.GetBilliardsTypeId();
 	BilliardsType* billiardsType = BilliardsManager::GetInstance()->FindBilliardsType(billiardsTypeId);
 
-	int mSecond = currentDateTime.toMSecsSinceEpoch()
+    qint64 mSecond = currentDateTime.toMSecsSinceEpoch()
 		- QDateTime::fromString(_billiards.GetBeginTime(), gTimeFormat).toMSecsSinceEpoch();
 	_durationTime = QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss");
 	if (billiardsType) {
