@@ -55,7 +55,7 @@
    <item>
     <widget class="QStackedWidget" name="stackedWidgetMainWindow">
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="pageBusiness">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -87,8 +87,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>98</width>
-               <height>28</height>
+               <width>1021</width>
+               <height>541</height>
               </rect>
              </property>
             </widget>
@@ -114,15 +114,8 @@
         <number>0</number>
        </property>
        <item>
-        <widget class="QGroupBox" name="groupBox_3">
-         <property name="title">
-          <string>历史</string>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
-          <item>
-           <widget class="QTableWidget" name="tableWidgetBill"/>
-          </item>
-         </layout>
+        <widget class="GuiBills" name="widgetBills" native="true">
+         <layout class="QHBoxLayout" name="horizontalLayout_9"/>
         </widget>
        </item>
       </layout>
@@ -483,6 +476,14 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GuiBills</class>
+   <extends>QWidget</extends>
+   <header>guibills.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources>
   <include location="bms.qrc"/>
  </resources>

@@ -24,9 +24,6 @@ private:
     void InitTabWidgetTable();        // 初始化球桌列表
     void UpdateBilliardsTable();      // 更新球桌列表
 
-    void InitTabWidgetBill();         // 初始化历史账单列表
-    void UpdateBill();                // 更新历史账单列表
-
     void InitBusinessPage();          // 初始化球桌界面...
 
     void InitConfigUi();              // 初始化配制界面...
