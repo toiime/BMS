@@ -45,7 +45,7 @@ void GuiPay::UpdateUi() {
 	ui.lineEditPayTime->setText(_billiards.GetEndTime());
 
 	QDateTime currentDateTime = QDateTime::currentDateTime();
-	int mSecond = currentDateTime.toMSecsSinceEpoch()
+    qint64 mSecond = currentDateTime.toMSecsSinceEpoch()
 		- QDateTime::fromString(_billiards.GetBeginTime(), gTimeFormat).toMSecsSinceEpoch();
 
 	_durationTime = QDateTime::fromMSecsSinceEpoch(mSecond).toUTC().toString("hh:mm:ss");
