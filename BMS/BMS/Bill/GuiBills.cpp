@@ -1,4 +1,6 @@
-﻿#include "GuiBills.h"
+﻿#include <QContextMenuEvent>
+
+#include "GuiBills.h"
 #include "ui_guibills.h"
 #include "./Bill/BillManager.h"
 
@@ -6,11 +8,18 @@ GuiBills::GuiBills(QWidget * parent) : QWidget(parent) {
     ui = new Ui::GuiBills();
     ui->setupUi(this);
 
+    _menu = new QMenu;
+    _menu->addAction(QStringLiteral("删除"));
+
     InitTabWidgetBill();
 }
 
 GuiBills::~GuiBills() {
     delete ui;
+    if (_menu) {
+        delete _menu;
+        _menu = nullptr;
+    }
 }
 
 void GuiBills::InitTabWidgetBill() {
@@ -66,4 +75,20 @@ void GuiBills::UpdateBill() {
             ui->tableWidgetBill->item(rowCount, i)->setTextAlignment(Qt::AlignCenter);
         }
     }
+}
+
+void GuiBills::contextMenuEvent(QContextMenuEvent *event) {
+    QPoint point = event->pos();
+
+    QPoint tablePos = ui->tableWidgetBill->mapFrom(this, point);
+    int tableHeaderHeight = ui->tableWidgetBill->horizontalHeader()->height();
+    QPoint truePos = tablePos - QPoint(0, tableHeaderHeight);
+    QTableWidgetItem* item = ui->tableWidgetBill->itemAt(truePos);
+
+    if (item) {
+        _menu->exec(QCursor::pos());
+        event->accept();
+    }
+
+    // OK todo ...
 }

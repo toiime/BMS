@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <QWidget>
+#include <QMenu>
 
 namespace Ui { class GuiBills; }
 
@@ -14,9 +15,13 @@ public:
 public:
     void UpdateBill();                // 更新历史账单列表
 
+protected:
+    void contextMenuEvent(QContextMenuEvent *event);
+
 private:
     void InitTabWidgetBill();         // 初始化历史账单列表
 
 private:
     Ui::GuiBills *ui;
+    QMenu* _menu;
 };
