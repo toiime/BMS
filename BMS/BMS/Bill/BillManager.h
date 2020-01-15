@@ -10,28 +10,29 @@ class Speech;
 // 账单管理器类...
 class BillManager {
 private:
-	BillManager();
-	~BillManager();
-	BillManager(const BillManager&) {}
-	BillManager& operator=(const BillManager&) {}
-	static BillManager* _instance;
+    BillManager();
+    ~BillManager();
+    BillManager(const BillManager&) {}
+    BillManager& operator=(const BillManager&) {}
+    static BillManager* _instance;
 
 public:
-	static BillManager* GetInstance();
+    static BillManager* GetInstance();
 
 public:
-	void LoadBillsFromDb();              // 数据库加载账单...
-	Bill* CreateBill();                  // 创建账单...
-	void UpdateBill(Bill* bill);         // 更新账单...
-	QVector<Bill*> GetBills();           // 返回账单...
+    void LoadBillsFromDb();              // 数据库加载账单...
+    Bill* CreateBill();                  // 创建账单...
+    void UpdateBill(Bill* bill);         // 更新账单...
+    void DeleteBill(QString id);         // 删除账单...
+    QVector<Bill*> GetBills();           // 返回账单...
 
 private:
-	void SayBill(Bill* bill);
+    void SayBill(Bill* bill);
 
 private:
-	QVector<Bill*> _vecBill;
+    QVector<Bill*> _vecBill;
 
-	Speech* _speech;
+    Speech* _speech;
 };
 
 #endif // !BILL_MANAGER_H_

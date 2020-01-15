@@ -1,15 +1,17 @@
 ﻿#include <QContextMenuEvent>
+#include <QDialog>
 
 #include "GuiBills.h"
 #include "ui_guibills.h"
 #include "./Bill/BillManager.h"
+#include "./CustomWidget/MsgHelper.h"
 
 GuiBills::GuiBills(QWidget * parent) : QWidget(parent) {
     ui = new Ui::GuiBills();
     ui->setupUi(this);
 
     _menu = new QMenu;
-    _menu->addAction(QStringLiteral("删除"));
+    _menu->addAction(QStringLiteral("删除"), this, &GuiBills::SlotDeleteBills);
 
     InitTabWidgetBill();
 }
@@ -51,6 +53,33 @@ void GuiBills::InitTabWidgetBill() {
     UpdateBill();
 }
 
+void GuiBills::SlotDeleteBills() {
+    QSet<QString> ids;
+    QItemSelectionModel* selections = ui->tableWidgetBill->selectionModel();
+    QModelIndexList selectedList = selections->selectedIndexes();
+    for (auto& l : selectedList) {
+        int row = l.row();
+        ids.insert(ui->tableWidgetBill->item(row, 0)->data(Qt::UserRole).toString());
+    }
+
+    if (ids.isEmpty()) {
+        MsgHelper::MsgInformation(this, "Note", "No Data Selected");
+        return;
+    }
+
+    int rv = MsgHelper::MsgQuestion(this, QString("Note")
+        , QStringLiteral("确定要删除 %1 条数据吗?").arg(ids.size()));
+    if (rv != QDialog::Accepted) {
+        return;
+    }
+
+    for (auto& s : ids) {
+        BillManager::GetInstance()->DeleteBill(s);
+    }
+
+    UpdateBill();
+}
+
 void GuiBills::UpdateBill() {
     ui->tableWidgetBill->setRowCount(0);
 
@@ -87,8 +116,5 @@ void GuiBills::contextMenuEvent(QContextMenuEvent *event) {
 
     if (item) {
         _menu->exec(QCursor::pos());
-        event->accept();
     }
-
-    // OK todo ...
 }

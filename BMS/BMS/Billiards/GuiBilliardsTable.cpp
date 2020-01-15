@@ -1,5 +1,4 @@
-﻿#include <QMenu>
-#include <QDebug>
+﻿#include <QDebug>
 
 #include "GuiBilliardsTable.h"
 #include "../Bill/GuiPay.h"
@@ -20,6 +19,10 @@ GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
     ui.lineEditDurationTime->setEnabled(false);
     ui.lineEditMoney->setEnabled(false);
 
+    _menu = new QMenu;
+    _menu->addAction(QStringLiteral("开局"), this, &GuiBilliardsTable::SlotBegin);
+    _menu->addAction(QStringLiteral("结账"), this, &GuiBilliardsTable::SlotEnd);
+
     _qPixmap = QPixmap(":/Pic/Res/billiardsTable.png");
     _qPixmap = _qPixmap.scaled(QSize(250, 130));
 
@@ -30,7 +33,10 @@ GuiBilliardsTable::GuiBilliardsTable(QWidget *parent)
 }
 
 GuiBilliardsTable::~GuiBilliardsTable() {
-
+    if (_menu) {
+        delete _menu;
+        _menu = nullptr;
+    }
 }
 
 void GuiBilliardsTable::SetBilliards(Billiards& billiards) {
@@ -74,11 +80,7 @@ void GuiBilliardsTable::UpdateData(QDateTime currentDateTime) {
 }
 
 void GuiBilliardsTable::contextMenuEvent(QContextMenuEvent *event) {
-    QMenu *menu = new QMenu(this);
-    menu->addAction(QStringLiteral("开局"), this, &GuiBilliardsTable::SlotBegin);
-    menu->addAction(QStringLiteral("结账"), this, &GuiBilliardsTable::SlotEnd);
-    menu->move(cursor().pos());
-    menu->show();
+    _menu->exec(QCursor::pos());
 }
 
 void GuiBilliardsTable::SlotBegin() {

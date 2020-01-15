@@ -1,7 +1,9 @@
 ﻿#ifndef GUIBILLIARDSTABLE_H
 #define GUIBILLIARDSTABLE_H
 
+#include <QMenu>
 #include <QWidget>
+
 #include "ui_GuiBilliardsTable.h"
 #include "./Billiards/Billiards.h"
 
@@ -33,6 +35,8 @@ private:
 
     QPixmap _qPixmap;                // 未开局图片...
     QPixmap _qPixmapPlaying;         // 开局进行中图片...
+
+    QMenu* _menu;
 };
 
 #endif // GUIBILLIARDSTABLE_H
